@@ -8,7 +8,7 @@ function generateChart() {
     let years = document.getElementById("years").value;
     let convertRate = rate / 100;
 
-    while (i < years) {
+    while (i <= years) {
         nums.push(i + " Years");
         let newAmount = principle * Math.pow(1 + (convertRate / frequency), frequency * i);
         balance.push(newAmount);
