@@ -4,7 +4,6 @@ function generateChart() {
     let nums = new Array();
     let principle = document.getElementById("principle").value;
     let rate = document.getElementById("rate").value;
-    // let frequency = document.getElementById("frequency").value;
     let frequency;
     let years = document.getElementById("years").value;
     let convertRate = rate / 100;
@@ -23,6 +22,7 @@ function generateChart() {
         frequency = 1
     }
 
+    //Add Data to the Arrays
     while (i <= years) {
         nums.push(i + " Years");
         let newAmount = principle * Math.pow(1 + (convertRate / frequency), frequency * i);
