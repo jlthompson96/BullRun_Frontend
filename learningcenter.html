@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/jpg" href="assets/favicon_io/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/learn.css">
+    <title>BullRun | Learning Center</title>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="#">BullRun</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Portfolio Tracker</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="learningcenter.html">Learning Center</a>
+                    </li>
+                </ul>
+                <!-- <form class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form> -->
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Learning Center</h1>
+        <!-- Intro Section -->
+        <section class="compound">
+            <h1>Compound Interest</h1>
+            <h3>"Interest computed on the sum of an original principal and accrued interest"</h3>
+            <p>- Merriam Webster Dictionary</p>
+            <h1>Compound Interest Calculator</h1>
+            <!-- User Entry -->
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Principle Amount</label>
+                    <input type="number" class="form-control" id="principle" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Interest Rate</label>
+                    <input type="number" class="form-control" id="rate">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Compound Frequency</label>
+                    <select id="choices" class="form-select" aria-label="Default select example">
+                        <option selected>Choose Compound Frequency</option>
+                        <option value="1">Daily</option>
+                        <option value="2">Quarterly</option>
+                        <option value="3">Monthly</option>
+                        <option value="4">Annually</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Years to Grow</label>
+                    <input type="number" class="form-control" id="years">
+                </div>
+                <button onclick="generateChart()" type="button" class="btn btn-primary">Submit</button>
+                <button onclick="window.location.reload()" type="button" class="btn btn-primary">Clear
+                    Chart</button>
+            </form>
+            <div class="compoundResults">
+                <div id="result"></div>
+                <div id="chart"></div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <section class="footer">
+            <footer>
+                <p>BullRun &copy; 2021</p>
+            </footer>
+        </section>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
+<script src="js/learn.js"></script>
+
+</html>
