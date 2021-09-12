@@ -26,6 +26,9 @@ button {
     background-color: white;
     color: black;
 }
+.compoundResults #result {
+    padding-top: 70px;
+}
 .footer {
     padding-top: 70px;
     text-align: center;
