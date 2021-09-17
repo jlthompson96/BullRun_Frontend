@@ -2,6 +2,7 @@ function generateChart() {
     let i = 0;
     let balance = new Array();
     let nums = new Array();
+    let contributions = new Array();
     let principle = document.getElementById("principle").value;
     let rate = document.getElementById("rate").value;
     let frequency;
@@ -28,6 +29,7 @@ function generateChart() {
         let newAmount = principle * Math.pow(1 + (convertRate / frequency), frequency * i);
         let formatNum = newAmount.toFixed(2);
         balance.push(formatNum);
+        contributions.push(principle);
         i++;
     }
     let finalNum = balance[balance.length - 1];
@@ -39,7 +41,11 @@ function generateChart() {
         series: [{
             name: "Balance ($USD)",
             data: balance
-        }],
+        },
+                 {
+                     name: "Total Contributions",
+                     data: contributions
+                 }],
         chart: {
             height: 350,
             type: 'line',
