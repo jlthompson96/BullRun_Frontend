@@ -39,7 +39,7 @@ function generateChart() {
     // Create Compound Interest Chart
     var options = {
         series: [{
-            name: "Balance ($USD)",
+            name: "Compounded Amount",
             data: balance
         },
                  {
