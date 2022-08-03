@@ -1,12 +1,16 @@
+function sanitizeUserInput(element) {
+   return DOMPurify.sanitize(element);   
+}
+
 function generateChart() {
     let i = 0;
     let balance = new Array();
     let nums = new Array();
     let contributions = new Array();
-    let principle = document.getElementById("principle").value;
-    let rate = document.getElementById("rate").value;
+    let principle = sanitizeUserInput(document.getElementById("principle").value);
+    let rate = sanitizeUserInput(document.getElementById("rate").value);
     let frequency;
-    let years = document.getElementById("years").value;
+    let years = sanitizeUserInput(document.getElementById("years").value);
     let convertRate = rate / 100;
 
     //Dropdown Menu Selection
@@ -37,7 +41,7 @@ function generateChart() {
     let formatPrincipal = principle.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     // Create Compound Interest Chart
-    var options = {
+    let options = {
         series: [{
             name: "Compounded Amount",
             data: balance
@@ -107,7 +111,7 @@ function generateChart() {
         }
     };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    let chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
 
     document.getElementById("result").innerHTML = "<h1>In " + years + " years at a rate of " + rate + "% compounded "+resultText+" your $" + formatPrincipal + " will turn into $" + formatHeader;
