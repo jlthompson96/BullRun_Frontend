@@ -1,4 +1,4 @@
-
+import './App.css'
 import { Typography } from '@mui/material'
 
 function App() {
