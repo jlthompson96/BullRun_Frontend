@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getCompanyLogo, getCompanyProfile, getStockPrice } from "../service/StockServices";
 import { CompanyLogo, CompanyProfile, Stock } from "../common/types";
 import { Button, CircularProgress, TextField, Typography } from "@mui/material";
+import './StockSearch.scss';
 
 const StockSearch = () => {
     const [symbol, setSymbol] = useState('');
@@ -53,7 +54,9 @@ const StockSearch = () => {
                     <p>{companyProfile?.CEO}</p>
                     <p>{companyProfile?.sectory}</p>
                     <p>{companyProfile?.industry}</p>
-                    <img src={companyLogo} alt="Company Logo" />
+                    <div className="photo-container">
+                        <img src={companyLogo} alt="Company Logo" />
+                    </div>
                 </div>
             )}
         </div>
