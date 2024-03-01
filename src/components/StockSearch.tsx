@@ -3,6 +3,7 @@ import {
     Button,
     CircularProgress,
     Container,
+    Divider,
     Paper,
     TextField,
     Typography,
@@ -17,6 +18,18 @@ const StockSearch = () => {
     const [companyLogo, setCompanyLogo] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [showFullDescription, setShowFullDescription] = useState(false);
+
+    const truncateText = (text, maxLength) => {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.slice(0, maxLength) + "...";
+    };
+
+    const handleShowMore = () => {
+        setShowFullDescription(!showFullDescription);
+    };
 
     const handleSearch = async () => {
         setLoading(true);
@@ -69,15 +82,29 @@ const StockSearch = () => {
                                 <img src={companyLogo} alt="Company Logo" />
                             </div>
                         </div>
-                        <Typography variant="h2">${Math.round(stockData.price * 100) / 100}</Typography>
+                        <Typography sx={{ marginTop: '30px', marginBottom: '30px' }} variant="h2">${Math.round(stockData.price * 100) / 100}</Typography>
                         <Typography variant="h6">About {companyProfile?.name}</Typography>
-                        <p>{companyProfile?.description}</p>
-                        <Typography variant="h6">CEO</Typography>
-                        <p>{companyProfile?.CEO}</p>
-                        <Typography variant="h6">Sector</Typography>
-                        <p>{companyProfile?.sector}</p>
-                        <Typography variant="h6">Industry</Typography>
-                        <p>{companyProfile?.industry}</p>
+                        <p>{truncateText(companyProfile?.description, 500)}</p>
+                        {companyProfile?.description && (
+                            <Button variant="contained" onClick={handleShowMore} sx={{ width: '15%', alignSelf: 'flex-start' }}>
+                                {showFullDescription ? "Show Less" : "Show More"}
+                            </Button>
+                        )}
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '50px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">CEO</Typography>
+                                <p>{companyProfile?.CEO}</p>
+                            </div>
+                            <Divider sx={{ marginY: 2 }} />
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">Sector</Typography>
+                                <p>{companyProfile?.sector}</p>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">Industry</Typography>
+                                <p>{companyProfile?.industry}</p>
+                            </div>
+                        </div>
                     </div>
                 </Paper>
             )}
