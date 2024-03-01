@@ -1,13 +1,17 @@
 import './App.css'
-import { Typography } from '@mui/material'
+import ResponsiveAppBar from './common/commonAppBar'
+import Footer from './common/Footer'
 import StockSearch from './components/StockSearch'
 
 function App() {
 
   return (
     <div>
-      <Typography variant='h1'>Welcome to BullRun!</Typography>
-      <StockSearch />
+      <ResponsiveAppBar />
+      <div className="App" style={{ paddingTop: '50px' }}>
+        <StockSearch />
+      </div>
+      <Footer />
     </div>
   )
 }

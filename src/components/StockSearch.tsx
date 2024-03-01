@@ -1,63 +1,119 @@
 import { useState } from "react";
+import {
+    Button,
+    CircularProgress,
+    Container,
+    Paper,
+    TextField,
+    Typography,
+} from "@mui/material";
+import "./StockSearch.scss"; // Assuming you have a custom CSS file
 import { getCompanyLogo, getCompanyProfile, getStockPrice } from "../service/StockServices";
-import { CompanyLogo, CompanyProfile, Stock } from "../common/types";
-import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 
 const StockSearch = () => {
-    const [symbol, setSymbol] = useState('');
-    const [stockData, setStockData] = useState<Stock | null>(null);
-    const [companyProfile, setCompanyProfile] = useState<CompanyProfile | null>(null);
-    const [companyLogo, setCompanyLogo] = useState('');
+    const [symbol, setSymbol] = useState("");
+    const [stockData, setStockData] = useState(null);
+    const [companyProfile, setCompanyProfile] = useState(null);
+    const [companyLogo, setCompanyLogo] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
+    const [showFullDescription, setShowFullDescription] = useState(false);
 
+    const truncateText = (text, maxLength) => {
+        if (!showFullDescription && text.length > maxLength) {
+            return text.slice(0, maxLength) + "...";
+        }
+        return text;
+    };
+
+    const handleShowMore = () => {
+        setShowFullDescription(!showFullDescription);
+    };
+
+    const handleSearch = async () => {
+        setLoading(true);
+        try {
+            const response = await getStockPrice(symbol);
+            const companyProfileResponse = await getCompanyProfile(symbol);
+            const companyLogoResponse = await getCompanyLogo(symbol);
+            setStockData(response.data);
+            setCompanyProfile(companyProfileResponse.data);
+            const companyLogo = { url: companyLogoResponse.data.url };
+            const logoString = `${companyLogo?.url}`;
+            setCompanyLogo(logoString);
+        } catch (e) {
+            setError(e.message);
+        }
+        setLoading(false);
+    };
 
     return (
-        <div>
-            <TextField
-                variant="outlined"
-                label="Stock Symbol"
-                value={symbol}
-                onChange={(e) => setSymbol(e.target.value)}
-                placeholder="Enter a stock symbol"
-            />
-            <Button
-                variant="contained"
-                onClick={async () => {
-                    setLoading(true);
-                    try {
-                        const response = await getStockPrice(symbol);
-                        const companyProfileResponse = await getCompanyProfile(symbol);
-                        const companyLogoResponse = await getCompanyLogo(symbol);
-                        setStockData(response.data);
-                        setCompanyProfile(companyProfileResponse.data);
-                        const companyLogo = { url: companyLogoResponse.data.url };
-                        const logoString = `${companyLogo?.url}`;
-                        setCompanyLogo(logoString);
-                    } catch (e) {
-                        setError(e.message);
-                    }
-                    setLoading(false);
-                }}
-            >
-                Search
-            </Button>
-            {loading && <CircularProgress />}
-            {error && <p>{error}</p>}
+        <Container maxWidth="lg">
+            <Paper elevation={3} sx={{ padding: '20px' }} className="stock-search-container">
+                <Typography variant="h5" gutterBottom>
+                    Stock Search
+                </Typography>
+                <TextField
+                    variant="outlined"
+                    label="Stock Symbol"
+                    value={symbol}
+                    onChange={(e) => setSymbol(e.target.value)}
+                    placeholder="Enter a stock symbol"
+                    fullWidth
+                    margin="normal"
+                />
+                <Button
+                    variant="contained"
+                    onClick={handleSearch}
+                    disabled={loading}
+                    sx={{ width: '15%', alignSelf: 'flex-end', marginTop: '20px', marginLeft: '85' }}
+                >
+                    {loading ? <CircularProgress size={24} /> : "Search"}
+                </Button>
+                {error && <p>{error}</p>}
+            </Paper>
             {stockData && (
-                <div>
-                    <p>${Math.round(stockData.price * 100) / 100}</p>
-                    <Typography variant="h6">Company Profile</Typography>
-                    <p>{companyProfile?.name}</p>
-                    <p>{companyProfile?.description}</p>
-                    <p>{companyProfile?.CEO}</p>
-                    <p>{companyProfile?.sectory}</p>
-                    <p>{companyProfile?.industry}</p>
-                    <img src={companyLogo} alt="Company Logo" />
-                </div>
+                <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-data-container">
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
+                            <p>{companyProfile?.name}</p>
+                            <div className="photo-container">
+                                <img src={companyLogo} alt="Company Logo" />
+                            </div>
+                        </div>
+                        <Typography sx={{ marginTop: '30px', marginBottom: '30px' }} variant="h2">${Math.round(stockData.price * 100) / 100}</Typography>
+                        <Typography variant="h6">About {companyProfile?.name}</Typography>
+                        <p>{truncateText(companyProfile?.description, 500)}</p>
+                        {companyProfile?.description && (
+                            <Button variant="outlined" onClick={handleShowMore} sx={{ width: '15%', alignSelf: 'flex-start' }}>
+                                {showFullDescription ? "Show Less" : "Show More"}
+                            </Button>
+                        )}
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '50px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">CEO</Typography>
+                                <p>{companyProfile?.CEO}</p>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">Sector</Typography>
+                                <p>{companyProfile?.sector}</p>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">Industry</Typography>
+                                <p>{companyProfile?.industry}</p>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">Website</Typography>
+                                <a href={companyProfile?.website} target="_blank" rel="noreferrer">
+                                    {companyProfile?.website}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </Paper>
             )}
-        </div>
+        </Container>
     );
-}
+};
 
 export default StockSearch;
