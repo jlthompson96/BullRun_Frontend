@@ -95,7 +95,6 @@ const StockSearch = () => {
                                 <Typography variant="h6">CEO</Typography>
                                 <p>{companyProfile?.CEO}</p>
                             </div>
-                            <Divider sx={{ marginY: 2 }} />
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Sector</Typography>
                                 <p>{companyProfile?.sector}</p>
