@@ -3,7 +3,6 @@ import {
     Button,
     CircularProgress,
     Container,
-    Divider,
     Paper,
     TextField,
     Typography,
@@ -21,10 +20,10 @@ const StockSearch = () => {
     const [showFullDescription, setShowFullDescription] = useState(false);
 
     const truncateText = (text, maxLength) => {
-        if (text.length <= maxLength) {
-            return text;
+        if (!showFullDescription && text.length > maxLength) {
+            return text.slice(0, maxLength) + "...";
         }
-        return text.slice(0, maxLength) + "...";
+        return text;
     };
 
     const handleShowMore = () => {
@@ -67,7 +66,7 @@ const StockSearch = () => {
                     variant="contained"
                     onClick={handleSearch}
                     disabled={loading}
-                    fullWidth
+                    sx={{ width: '15%', alignSelf: 'flex-end', marginTop: '20px', marginLeft: '85' }}
                 >
                     {loading ? <CircularProgress size={24} /> : "Search"}
                 </Button>
@@ -86,7 +85,7 @@ const StockSearch = () => {
                         <Typography variant="h6">About {companyProfile?.name}</Typography>
                         <p>{truncateText(companyProfile?.description, 500)}</p>
                         {companyProfile?.description && (
-                            <Button variant="contained" onClick={handleShowMore} sx={{ width: '15%', alignSelf: 'flex-start' }}>
+                            <Button variant="outlined" onClick={handleShowMore} sx={{ width: '15%', alignSelf: 'flex-start' }}>
                                 {showFullDescription ? "Show Less" : "Show More"}
                             </Button>
                         )}
@@ -102,6 +101,12 @@ const StockSearch = () => {
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Industry</Typography>
                                 <p>{companyProfile?.industry}</p>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <Typography variant="h6">Website</Typography>
+                                <a href={companyProfile?.website} target="_blank" rel="noreferrer">
+                                    {companyProfile?.website}
+                                </a>
                             </div>
                         </div>
                     </div>
