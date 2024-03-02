@@ -12,3 +12,7 @@ export const getCompanyProfile = async (symbol: any) => {
 export const getCompanyLogo = async (symbol: any) => {
     return api.post('/stockData/getCompanyLogo?symbol=' + symbol)
 }
+
+export const getPreviousClose = async (symbol: any) => {
+    return api.post('/stockData/getPreviousClose?symbol=' + symbol)
+}
