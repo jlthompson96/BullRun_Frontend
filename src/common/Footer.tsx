@@ -1,4 +1,4 @@
-import './footer.scss';
+import './Footer.scss';
 
 interface FooterProps {
     className?: string;
