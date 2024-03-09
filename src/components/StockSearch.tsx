@@ -79,15 +79,23 @@ const StockSearch: React.FC = () => {
             const companyLogo = { url: companyLogoResponse.data.url };
             const logoString = `${companyLogo?.url}`;
             setCompanyLogo(logoString);
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                setError(e.message);
+            } else {
+                setError("An unknown error occurred");
+            }
         }
         setLoading(false);
     };
 
+    const handleClear = (): void => {
+        setStockData(null);
+    };
+
     return (
         <Container maxWidth="lg">
-            <Paper elevation={3} sx={{ padding: '20px' }} className="stock-search-container">
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
                 <Typography variant="h5" gutterBottom>
                     Stock Search
                 </Typography>
@@ -104,9 +112,17 @@ const StockSearch: React.FC = () => {
                     variant="contained"
                     onClick={handleSearch}
                     disabled={loading}
-                    sx={{ width: '15%', alignSelf: 'flex-end', marginTop: '20px', marginLeft: '85px' }} // Adjust marginLeft value
+                    sx={{ width: '15%', alignSelf: 'flex-end', marginTop: '20px' }} // Adjust marginLeft value
                 >
                     {loading ? <CircularProgress size={24} /> : "Search"}
+                </Button>
+                <Button
+                    variant="outlined"
+                    onClick={handleClear}
+                    disabled={loading}
+                    sx={{ width: '15%', alignSelf: 'flex-end', marginTop: '20px', marginLeft: '10px' }}
+                >
+                    Clear
                 </Button>
 
                 {error && <p>{error}</p>}
@@ -127,11 +143,23 @@ const StockSearch: React.FC = () => {
                         </Typography>                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Daily Change $</Typography>
-                                <b><p style={{ color: getStockChangeColor() }}>${Math.round(((stockData?.price ?? 0) - previousClose) * 100) / 100}</p></b>
+                                <b>
+                                    <p style={{ color: getStockChangeColor() }}>
+                                        ${Math.round(((stockData?.price ?? 0) - previousClose) * 100) / 100}
+                                        {(stockData?.price ?? 0) - previousClose > 0 && <span>&#9650;</span>}
+                                        {(stockData?.price ?? 0) - previousClose < 0 && <span>&#9660;</span>}
+                                    </p>
+                                </b>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Daily Change %</Typography>
-                                <b><p style={{ color: getStockChangeColor() }}>{setStockChange(stockData)}%</p></b>
+                                <b>
+                                    <p style={{ color: getStockChangeColor() }}>
+                                        {setStockChange(stockData)}%
+                                        {parseFloat(setStockChange(stockData)) > 0 && <span>&#9650;</span>}
+                                        {parseFloat(setStockChange(stockData)) < 0 && <span>&#9660;</span>}
+                                    </p>
+                                </b>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Previous Close</Typography>
