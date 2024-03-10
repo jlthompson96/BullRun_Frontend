@@ -14,4 +14,3 @@ A Spring application to manage financial portfolios and provide financial litera
 - Typescript <img align="left" alt="JavaScipt" width="26px" src="https://github.com/jlthompson96/vscode-material-icon-theme/blob/master/icons/typescript.svg" />
 - Axios <img align="left" alt="JavaScipt" width="26px" src="https://github.com/jlthompson96/vscode-material-icon-theme/blob/master/icons/http.svg" />
 - MUI Library <img align="left" alt="JavaScipt" width="26px" src="https://mui.com/static/logo.svg" />
-- TwelveData API <img align="left" alt="JavaScipt" width="26px" src="https://avatars.githubusercontent.com/u/59389925?s=200&v=4" />
