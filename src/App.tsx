@@ -1,7 +1,7 @@
 import './App.css'
 import ResponsiveAppBar from './common/commonAppBar'
 import Footer from './common/Footer'
-import IndiciesBanner from './components/IndiciesBanner'
+import IndiciesTicker from './components/IndicesTicker'
 import StockSearch from './components/StockSearch'
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <div>
       <ResponsiveAppBar />
       <div className="App" style={{ paddingTop: '50px' }}>
-        {/* <IndiciesBanner /> */}
+        <IndiciesTicker />
         <StockSearch />
       </div>
       <Footer />
