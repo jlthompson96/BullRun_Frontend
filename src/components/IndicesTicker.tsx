@@ -1,85 +1,61 @@
-import { Container, Paper } from "@mui/material";
-import { getPreviousClose, getStockPrice } from "../service/StockServices";
-import { useState, useEffect } from "react";
-import { Padding } from "@mui/icons-material";
+import React, { useState, useEffect } from "react";
+import {
+    Container,
+    Paper,
+    Typography,
+} from "@mui/material";
+import "./StockSearch.scss"; // Assuming you have a custom CSS file
+import { getIndicesData } from "../service/StockServices";
 
-const IndicesTicker = () => {
-    const [dji, setDji] = useState(0);
-    const [djiPreviousClose, setDjiPreviousClose] = useState(0);
-    const [sp500PreviousClose, setSp500PreviousClose] = useState(0);
-    const [nasdaqPreviousClose, setNasdaqPreviousClose] = useState(0);
-    const [sp500, setSp500] = useState(0);
-    const [nasdaq, setNasdaq] = useState(0);
-    const [error, setError] = useState(null); // Define error state
+
+const IndiciesTicker: React.FC = () => {
+    const [djiPrice, setDjiPrice] = useState<string>("");
+    const [sp500Price, setSp500Price] = useState<string>("");
+    const [nasdaqPrice, setNasdaqPrice] = useState<string>("");
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchIndexData = async () => {
             try {
-                // Fetch all stock prices concurrently
-                const [djiData, sp500Data, nasdaqData] = await Promise.all([
-                    getStockPrice('DJI'),
-                    getPreviousClose('DJI'),
-                    getStockPrice('GSPC'),
-                    getPreviousClose('GSPC'),
-                    getStockPrice('IXIC'),
-                    getPreviousClose('IXIC')
-                ]);
-                // Set the state for each stock price
-                setDji(djiData.data.price);
-                setDjiPreviousClose(djiData.data.previousClose);
-                setSp500(sp500Data.data.price);
-                setSp500PreviousClose(sp500Data.data.previousClose);
-                setNasdaq(nasdaqData.data.price);
-                setNasdaqPreviousClose(nasdaqData.data.previousClose);
-            } catch (e) {
-                setError(e.message); // Set error if fetch fails
+                const response = await getIndicesData();
+                setDjiPrice(response.data.DJI);
+                setSp500Price(response.data.SP500);
+                setNasdaqPrice(response.data.NASDAQ);
+            } catch (e: unknown) {
+                if (e instanceof Error) {
+                    setError(e.message);
+                } else {
+                    setError("An unknown error occurred");
+                }
             }
         };
-        fetchData();
+        fetchIndexData();
     }, []);
 
-
-    const setStockChange = (stockData) => {
-        if (stockData) {
-            const change = stockData.price - previousClose;
-            const changePercent = (change / previousClose) * 100;
-            return changePercent.toFixed(2);
-        }
-        return 0;
-    }
-
-    const getStockChangeColor = () => {
-        if (stockData) {
-            const change = stockData.price - previousClose;
-            if (change > 0) {
-                return "green";
-            } else if (change < 0) {
-                return "red";
-            }
-        }
-        return "black";
-    };
-
     return (
-
-        <Container maxWidth='lg' sx={{ marginBottom: '50px' }}>
-            <Paper elevation={3} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                <div style={{ padding: '10px' }}>
-                    <h3>DJI</h3>
-                    <b><p style={{ color: getStockChangeColor() }}>{`${Number(dji).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} (${setStockChange(dji, djiPreviousClose)}%)`}</p></b>
-                </div>
-                <div style={{ padding: '10px' }}>
-                    <h3>S&amp;P 500</h3>
-                    <b><p style={{ color: getStockChangeColor() }}>{`${Number(sp500).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} (${setStockChange(sp500, sp500PreviousClose)}%)`}</p></b>
-                </div>
-                <div style={{ padding: '10px' }}>
-                    <h3>NASDAQ</h3>
-                    <b><p style={{ color: getStockChangeColor() }}>{`${Number(nasdaq).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 })} (${setStockChange(nasdaq)}%)`}</p></b>
+        <Container maxWidth="lg">
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+                <Typography variant="h5" gutterBottom>
+                    Stock Market Indices
+                </Typography>
+                <div className="error">{error}</div>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', columnGap: '50px', textAlign: 'center' }}>
+                    <div>
+                        <p>Dow Jones Industrial Average (DJI)</p>
+                        <b><p>{djiPrice}</p></b>
+                    </div>
+                    <div>
+                        <p>S&amp;P 500</p>
+                        <b><p>{sp500Price}</p></b>
+                    </div>
+                    <div>
+                        <p>NASDAQ Composite (NASDAQ)</p>
+                        <b><p>{nasdaqPrice}</p></b>
+                    </div>
                 </div>
             </Paper>
         </Container>
+    );
+};
 
-    )
-}
-
-export default IndicesTicker;
+export default IndiciesTicker;

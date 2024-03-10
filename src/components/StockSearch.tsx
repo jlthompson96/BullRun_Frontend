@@ -91,6 +91,7 @@ const StockSearch: React.FC = () => {
 
     const handleClear = (): void => {
         setStockData(null);
+        setSymbol("");
     };
 
     return (

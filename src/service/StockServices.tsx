@@ -16,3 +16,7 @@ export const getCompanyLogo = async (symbol: any) => {
 export const getPreviousClose = async (symbol: any) => {
     return api.get('/stockData/previousClose?symbol=' + symbol)
 }
+
+export const getIndicesData = async () => {
+    return api.get('/stockData/indexPrices')
+}
