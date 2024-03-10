@@ -1,27 +1,16 @@
-# React + TypeScript + Vite
+# Greenway Inventory System Frontend
+<img src = "https://github.com/jlthompson96/BullRun_Frontend/blob/main/src/assets/Designer.png" height= "200px" alt = "GW Logo">
+A Spring application to manage financial portfolios and provide financial literacy to users.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Goals
+- [ ] Indivdual Stock Analysis
+- [ ] Learning Center to help users gain financial literacy
+- [ ] Track portfolio performance over time
+- [ ] Keep up with the latest news in the market 
+- [ ] Dashboard to track all of the above
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Technologies
+- React <img align="left" alt="JavaScipt" width="26px" src="https://github.com/jlthompson96/vscode-material-icon-theme/blob/master/icons/react.svg" />
+- Typescript <img align="left" alt="JavaScipt" width="26px" src="https://github.com/jlthompson96/vscode-material-icon-theme/blob/master/icons/typescript.svg" />
+- Axios <img align="left" alt="JavaScipt" width="26px" src="https://github.com/jlthompson96/vscode-material-icon-theme/blob/master/icons/http.svg" />
+- MUI Library <img align="left" alt="JavaScipt" width="26px" src="https://mui.com/static/logo.svg" />
