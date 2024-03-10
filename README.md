@@ -1,4 +1,4 @@
-# Greenway Inventory System Frontend
+# BullRun Frontend
 <img src = "https://github.com/jlthompson96/BullRun_Frontend/blob/main/src/assets/Designer.png" height= "200px" alt = "GW Logo">
 A Spring application to manage financial portfolios and provide financial literacy to users.
 
