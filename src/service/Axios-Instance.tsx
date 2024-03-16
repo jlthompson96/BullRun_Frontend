@@ -4,6 +4,10 @@ import axios from 'axios';
 const headers: Readonly<Record<string, string | boolean>> = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'https://bull-run-frontend-bud0r183r-jlthompson96s-projects.vercel.app',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+    'Access-Control-Max-Age': '3600'
     // 'Autherization': 'Bearer ' + localStorage.getItem('token'),
 
 
