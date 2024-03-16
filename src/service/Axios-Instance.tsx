@@ -3,6 +3,10 @@ import axios from 'axios';
 
 const headers: Readonly<Record<string, string | boolean>> = {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    // 'Autherization': 'Bearer ' + localStorage.getItem('token'),
+
+
 };
 
 const api = axios.create({
