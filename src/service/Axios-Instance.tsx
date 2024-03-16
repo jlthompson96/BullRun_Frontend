@@ -6,7 +6,7 @@ const headers: Readonly<Record<string, string | boolean>> = {
 };
 
 const api = axios.create({
-    baseURL: 'https://thompsonserver.net/stockData',
+    baseURL: 'https://thompsonserver.net/',
     headers: headers,
 });
 
