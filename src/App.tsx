@@ -10,7 +10,7 @@ function App() {
     <div>
       <ResponsiveAppBar />
       <div className="App" style={{ paddingTop: '50px' }}>
-        <IndiciesTicker />
+        {/* <IndiciesTicker /> */}
         <StockSearch />
       </div>
       <Footer />
