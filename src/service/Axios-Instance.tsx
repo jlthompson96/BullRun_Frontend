@@ -3,11 +3,18 @@ import axios from 'axios';
 
 const headers: Readonly<Record<string, string | boolean>> = {
     'Content-Type': 'application/json',
-    //'Autherization': 'Bearer ' + localStorage.getItem('token'),
+    'Access-Control-Allow-Origin': 'https://bull-run-frontend.vercel.app, https://thompsonserver.net',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Max-Age': '3600',
+    // 'Autherization': 'Bearer ' + localStorage.getItem('token'),
+
+
 };
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://thompsonserver.net/',
     headers: headers,
 });
 
