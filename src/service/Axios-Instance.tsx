@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const headers: Readonly<Record<string, string | boolean>> = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://bull-run-frontend-bud0r183r-jlthompson96s-projects.vercel.app, https://thompsonserver.net',
+    'Access-Control-Allow-Origin': 'https://bull-run-frontend-bud0r183r-jlthompson96s-projects.vercel.app/, https://thompsonserver.net',
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
