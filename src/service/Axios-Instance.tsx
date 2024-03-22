@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 
-const headers: Readonly<Record<string, string | boolean>> = {
-    'Content-Type': 'application/json',
-};
+
 
 const api = axios.create({
-    baseURL: 'https://thompsonserver.net/',
-    headers: headers,
+    baseURL: 'http://localhost:8080',
+
 });
 
 api.interceptors.request.use(
