@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import "./StockSearch.scss"; // Assuming you have a custom CSS file
 import { getCompanyLogo, getCompanyProfile, getPreviousClose, getStockPrice } from "../service/StockServices";
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
 interface CompanyProfile {
     name: string;
@@ -101,6 +100,8 @@ const StockSearch: React.FC = () => {
                 <Typography variant="h5" gutterBottom>
                     Stock Search
                 </Typography>
+                <hr />
+                <Typography variant="body1"> Enter a stock symbol to get the latest stock price and information about the company.</Typography>
                 <TextField
                     variant="outlined"
                     label="Stock Symbol"
@@ -200,7 +201,6 @@ const StockSearch: React.FC = () => {
                 </Paper>
             )
             }
-            <SpeedInsights />
         </Container >
 
     );
