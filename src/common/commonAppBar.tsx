@@ -2,6 +2,9 @@ import { AppBar, MenuItem, Toolbar, Typography } from "@mui/material";
 import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import StockSearch from "../routes/StockSearch";
 import BullRunLogo from "../assets/BullRunLogo.png";
+import LearningCenter from "../routes/LearningCenter";
+import News from "../routes/News";
+import Dashboard from "../routes/Dashboard";
 
 // Import your components (Home, About, Contact)
 
@@ -24,9 +27,10 @@ const App = () => {
         <Router>
             <CommonAppBar />
             <Routes>
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/stockAnalyzer" element={<StockSearch />} />
-                {/* <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} /> */}
+                <Route path="/learningCenter" element={<LearningCenter />} />
+                <Route path="/news" element={<News />} />
             </Routes>
         </Router>
     );

@@ -100,6 +100,8 @@ const StockSearch: React.FC = () => {
                 <Typography variant="h5" gutterBottom>
                     Stock Search
                 </Typography>
+                <hr />
+                <Typography variant="body1"> Enter a stock symbol to get the latest stock price and information about the company.</Typography>
                 <TextField
                     variant="outlined"
                     label="Stock Symbol"
