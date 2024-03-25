@@ -4,7 +4,6 @@ import CompoundChartExample from "../common/CompountChartExample";
 const LearningCenter = () => {
     return (
         <Container maxWidth="lg">
-
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
                 <Typography variant="h5" gutterBottom>
                     Learning Center
@@ -14,7 +13,7 @@ const LearningCenter = () => {
                     Welcome to the Learning Center! Here you can learn about the stock market, investing, and more. We have articles, tutorials, and videos to help you learn more about the stock market.
                 </Typography>
             </Paper>
-            <div style={{ display: 'flex', columnGap: '5%' }}>
+            <div style={{ display: 'flex', columnGap: '5%', flexWrap: 'nowrap' }}>
                 <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
                     <Typography variant="h5" gutterBottom>
                         Stock Market Basics
