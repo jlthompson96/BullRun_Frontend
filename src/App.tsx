@@ -1,5 +1,5 @@
 import './App.css'
-import ResponsiveAppBar from './common/CommonAppBar'
+import ResponsiveAppBar from './common/commonAppBar'
 import Footer from './common/Footer'
 
 function App() {
