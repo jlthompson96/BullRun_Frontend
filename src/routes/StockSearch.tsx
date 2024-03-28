@@ -98,7 +98,7 @@ const StockSearch: React.FC = () => {
         <Container maxWidth="lg">
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
                 <Typography variant="h5" gutterBottom>
-                    Stock Search
+                    Stock Analyzer
                 </Typography>
                 <hr />
                 <Typography variant="body1"> Enter a stock symbol to get the latest stock price and information about the company.</Typography>
@@ -110,7 +110,9 @@ const StockSearch: React.FC = () => {
                     placeholder="Enter a stock symbol"
                     fullWidth
                     margin="normal"
+                    sx={{ marginTop: '20px', width: '33%' }}
                 />
+                <br />
                 <Button
                     variant="contained"
                     onClick={handleSearch}
