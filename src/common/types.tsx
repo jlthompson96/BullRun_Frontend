@@ -17,3 +17,10 @@ export interface CompanyProfile extends BaseObject {
 export interface CompanyLogo extends BaseObject {
     url: string;
 }
+
+export interface StockNews extends BaseObject {
+    link: string;
+    description: string;
+    title: string;
+    pubDate: string;
+}

@@ -20,3 +20,7 @@ export const getPreviousClose = async (symbol: any) => {
 export const getIndicesData = async () => {
     return api.get('/stockData/indexPrices')
 }
+
+export const getStockNews = async (symbol: any) => {
+    return api.get('/stockNews?symbol=' + symbol)
+}

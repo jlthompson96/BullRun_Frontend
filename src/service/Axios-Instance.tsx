@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const api = axios.create({
-    baseURL: 'https://thompsonserver.net/',
+    baseURL: 'http://localhost:8080/',
 
 });
 

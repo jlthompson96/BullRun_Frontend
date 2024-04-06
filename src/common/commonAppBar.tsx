@@ -3,10 +3,8 @@ import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import StockSearch from "../routes/StockSearch";
 import BullRunLogo from "../assets/BullRunLogo.png";
 import LearningCenter from "../routes/LearningCenter";
-import News from "../routes/News";
 import Dashboard from "../routes/Dashboard";
-
-// Import your components (Home, About, Contact)
+import StockNews from "../routes/StockNews";
 
 const CommonAppBar = () => {
     return (
@@ -30,7 +28,7 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/stockAnalyzer" element={<StockSearch />} />
                 <Route path="/learningCenter" element={<LearningCenter />} />
-                <Route path="/news" element={<News />} />
+                <Route path="/news" element={<StockNews />} />
             </Routes>
         </Router>
     );
