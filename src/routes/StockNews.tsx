@@ -21,13 +21,13 @@ const StockNews = () => {
                 </Typography>
                 <hr />
                 <Typography variant="body1">
-                    Welcome to the News section! Here you can read the latest news about the stock market, investing, and more. We have articles, tutorials, and videos to help you stay up to date with the latest news.
+                    Welcome to the News section! Here you can read the latest news about the stock market, investing, and more. We have articles, from Yahoo Finance to help you stay up to date with the latest news.
                 </Typography>
                 <Typography variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                     Latest News for {symbol}
                 </Typography>
                 {news.map((item: any, index) => (
-                    <div key={index}>
+                    <div key={index} style={{ padding: '10px' }}>
                         <Link href={item.link} target="_blank" rel="noopener">
                             <Typography variant="h6">{item.title}</Typography>
                         </Link>
