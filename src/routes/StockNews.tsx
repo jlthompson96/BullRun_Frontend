@@ -1,9 +1,10 @@
-import { Container, Paper, Typography } from "@mui/material";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Container, Paper, Typography, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getStockNews } from "../service/StockServices";
 
 const StockNews = () => {
-    const [news, setNews] = useState<typeof StockNews[]>([]);
+    const [news, setNews] = useState<unknown[]>([]);
     const symbol = "AAPL"; // The stock symbol to fetch news for
 
     useEffect(() => {
@@ -11,7 +12,6 @@ const StockNews = () => {
             .then(response => setNews(response.data)) // Extract the data from the Axios response
             .catch(error => console.error("Error fetching stock news:", error));
     }, []);
-
 
     return (
         <Container maxWidth="lg">
@@ -24,8 +24,18 @@ const StockNews = () => {
                     Welcome to the News section! Here you can read the latest news about the stock market, investing, and more. We have articles, tutorials, and videos to help you stay up to date with the latest news.
                 </Typography>
                 <Typography variant="h5" gutterBottom style={{ marginTop: '20px' }}>
-                    Latest News
+                    Latest News for {symbol}
                 </Typography>
+                {news.map((item: any, index) => (
+                    <div key={index}>
+                        <Link href={item.link} target="_blank" rel="noopener">
+                            <Typography variant="h6">{item.title}</Typography>
+                        </Link>
+                        <Typography variant="body2">{item.description}</Typography>
+                        <Typography variant="body2">{new Date(item.pubDate).toLocaleString()}</Typography>
+                        <hr />
+                    </div>
+                ))}
             </Paper>
         </Container>
     );

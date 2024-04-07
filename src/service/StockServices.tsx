@@ -22,5 +22,5 @@ export const getIndicesData = async () => {
 }
 
 export const getStockNews = async (symbol: any) => {
-    return api.get('/stockNews?symbol=' + symbol)
+    return api.get('/stockData/stockNews?symbol=' + symbol)
 }
