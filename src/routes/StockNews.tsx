@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Container, Paper, Typography, Link } from "@mui/material";
+import { Container, Paper, Typography, Link, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getStockNews } from "../service/StockServices";
 
@@ -26,6 +26,7 @@ const StockNews = () => {
                 <Typography variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                     Latest News for {symbol}
                 </Typography>
+                {news.length === 0 && <><Typography variant="h4">Loading News</Typography><CircularProgress /></>}
                 {news.map((item: any, index) => (
                     <div key={index} style={{ padding: '10px' }}>
                         <Link href={item.link} target="_blank" rel="noopener">
