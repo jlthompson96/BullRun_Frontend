@@ -3,7 +3,7 @@
 A Spring application to manage financial portfolios and provide financial literacy to users.
 
 ## Goals
-- [ ] Indivdual Stock Analysis
+- [ ] Individual Stock Analysis
 - [ ] Learning Center to help users gain financial literacy
 - [ ] Track portfolio performance over time
 - [ ] Keep up with the latest news in the market 
