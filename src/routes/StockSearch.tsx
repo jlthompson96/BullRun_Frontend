@@ -10,19 +10,7 @@ import {
 } from "@mui/material";
 import "./StockSearch.scss"; // Assuming you have a custom CSS file
 import { getCompanyLogo, getCompanyProfile, getPreviousClose, getStockPrice } from "../service/StockServices";
-
-interface CompanyProfile {
-    name: string;
-    description: string;
-    CEO: string;
-    sector: string;
-    industry: string;
-    website: string;
-}
-
-interface StockData {
-    price: number;
-}
+import { CompanyProfile, StockData } from "../common/types";
 
 const StockSearch: React.FC = () => {
     const [symbol, setSymbol] = useState<string>("");
@@ -89,6 +77,18 @@ const StockSearch: React.FC = () => {
         setLoading(false);
     };
 
+    function formatMarketCap(marketCap: number) {
+        if (marketCap >= 1.0e+12) {
+            return (marketCap / 1.0e+12).toFixed(2) + " Trillion";
+        } else if (marketCap >= 1.0e+9) {
+            return (marketCap / 1.0e+9).toFixed(2) + " Billion";
+        } else if (marketCap >= 1.0e+6) {
+            return (marketCap / 1.0e+6).toFixed(2) + " Million";
+        } else {
+            return marketCap.toString();
+        }
+    }
+
     const handleClear = (): void => {
         setStockData(null);
         setSymbol("");
@@ -136,7 +136,7 @@ const StockSearch: React.FC = () => {
                 <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-data-container">
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
-                            <Typography variant="h5">{companyProfile?.name}</Typography>
+                            <Typography variant="h5">{companyProfile?.results?.name}</Typography>
                             <div className="photo-container">
                                 <img src={companyLogo} alt="Company Logo" />
                             </div>
@@ -172,30 +172,30 @@ const StockSearch: React.FC = () => {
                             </div>
                         </div>
                         <Divider sx={{ marginTop: '20px', marginBottom: '20px' }} />
-                        <Typography variant="h6">About {companyProfile?.name}</Typography>
-                        <p>{truncateText(companyProfile?.description ?? "", 500)}</p>
-                        {companyProfile?.description && (
+                        <Typography variant="h6">About {companyProfile?.results?.name}</Typography>
+                        <p>{truncateText(companyProfile?.results?.description ?? "", 500)}</p>
+                        {companyProfile?.results?.description && (
                             <Button variant="outlined" onClick={handleShowMore} sx={{ width: '15%', alignSelf: 'flex-start' }}>
                                 {showFullDescription ? "Show Less" : "Show More"}
                             </Button>
                         )}
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '50px' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <Typography variant="h6">CEO</Typography>
-                                <b><p>{companyProfile?.CEO}</p></b>
+                                <Typography variant="h6">Market Cap</Typography>
+                                <b><p>{formatMarketCap(companyProfile?.results?.market_cap)}</p></b>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Sector</Typography>
-                                <b><p>{companyProfile?.sector}</p></b>
+                                <b><p>{companyProfile?.results?.sic_description}</p></b>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <Typography variant="h6">Industry</Typography>
-                                <b><p>{companyProfile?.industry}</p></b>
+                                <Typography variant="h6">Number of Employees</Typography>
+                                <b><p>{companyProfile?.results?.total_employees.toLocaleString()}</p></b>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Website</Typography>
-                                <a href={companyProfile?.website} target="_blank" rel="noreferrer">
-                                    {companyProfile?.website}
+                                <a href={companyProfile?.results?.homepage_url} target="_blank" rel="noreferrer">
+                                    {companyProfile?.results?.homepage_url}
                                 </a>
                             </div>
                         </div>
