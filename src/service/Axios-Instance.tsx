@@ -4,6 +4,7 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    baseURL: 'https://bullrun-backend-olsqzhz6hq-uc.a.run.app/',
 });
 
 api.interceptors.request.use(
