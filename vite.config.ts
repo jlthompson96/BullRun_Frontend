@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/stockData':'http://localhost:8080',
+      '/stockData':'https://bullrun-backend-olsqzhz6hq-uc.a.run.app',
     }
   }
 });
