@@ -13,24 +13,26 @@ const LearningCenter = () => {
                     Welcome to the Learning Center! Here you can learn about the stock market, investing, and more. We have articles, tutorials, and videos to help you learn more about the stock market.
                 </Typography>
             </Paper>
-            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
-                    Stock Market Basics
-                </Typography>
-                <hr />
-                <Typography variant="body1">
-                    The stock market is a place where investors can buy and sell shares of publicly traded companies. The stock market is an essential part of the economy and plays a crucial role in the financial system. In this section, you will learn about the basics of the stock market, how it works, and how you can invest in it.
-                </Typography>
-            </Paper>
-            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
-                    Investing 101
-                </Typography>
-                <hr />
-                <Typography variant="body1">
-                    Investing is the process of putting money into financial assets with the expectation of generating a profit in the future. Investing is an essential part of building wealth and achieving financial goals. In this section, you will learn the basics of investing, how to get started, and how to build a diversified investment portfolio.
-                </Typography>
-            </Paper>
+            <div style={{ display: 'flex', columnGap: '5%', flexWrap: 'nowrap' }}>
+                <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+                    <Typography variant="h5" gutterBottom>
+                        Stock Market Basics
+                    </Typography>
+                    <hr />
+                    <Typography variant="body1">
+                        The stock market is a place where investors can buy and sell shares of publicly traded companies. The stock market is an essential part of the economy and plays a crucial role in the financial system. In this section, you will learn about the basics of the stock market, how it works, and how you can invest in it.
+                    </Typography>
+                </Paper>
+                <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+                    <Typography variant="h5" gutterBottom>
+                        Investing 101
+                    </Typography>
+                    <hr />
+                    <Typography variant="body1">
+                        Investing is the process of putting money into financial assets with the expectation of generating a profit in the future. Investing is an essential part of building wealth and achieving financial goals. In this section, you will learn the basics of investing, how to get started, and how to build a diversified investment portfolio.
+                    </Typography>
+                </Paper>
+            </div>
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
                 <Typography variant="h5" gutterBottom>
                     Compound Interest
@@ -42,7 +44,6 @@ const LearningCenter = () => {
                 <Typography variant="h5" style={{ padding: '20px' }}>
                     Lets Calculate Compound Interest
                 </Typography>
-                <hr style={{ margin: '20px' }} />
                 <Typography variant="body1" style={{ padding: '20px' }}>
                     Compound interest is calculated using the formula:
                     A = P(1 + r/n)^(nt)

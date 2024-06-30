@@ -1,4 +1,6 @@
 import { Container, Paper, Typography } from "@mui/material";
+import StockSearch from "./StockSearch";
+import StockNews from "./StockNews";
 
 const Dashboard = () => {
     return (
@@ -12,6 +14,10 @@ const Dashboard = () => {
                     Welcome to the Dashboard! Here you can view your portfolio, watchlist, and more. We have tools to help you track your investments and make informed decisions.
                 </Typography>
             </Paper>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <StockSearch />
+                <StockNews />
+            </div>
         </Container>
     );
 }

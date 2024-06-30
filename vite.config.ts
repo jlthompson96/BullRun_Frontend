@@ -1,14 +1,13 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
+console.log('Loading Vite config...');
+
 export default defineConfig({
+  plugins: [react()],
   server: {
     proxy: {
-      '/stockData': {
-        target: 'https://thompsonserver.net/'
-      }
+      '/stockData':'https://bullrun-backend-olsqzhz6hq-uc.a.run.app',
     }
-  },
-  plugins: [react()],
-})
+  }
+});

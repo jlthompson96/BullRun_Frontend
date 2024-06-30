@@ -50,7 +50,7 @@ const InvestmentChart = () => {
                 formatter: (value: number) => `Year ${value}`
             },
             y: {
-                formatter: (value: number) => `$${value.toFixed(2)}`
+                formatter: (value: number) => `$${value.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
             }
         }
     };
