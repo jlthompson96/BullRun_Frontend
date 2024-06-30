@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const api = axios.create({
-    baseURL: 'https://thompsonserver.net/',
+    baseURL: 'https://bullrun-backend-olsqzhz6hq-uc.a.run.app/',
 
 });
 
