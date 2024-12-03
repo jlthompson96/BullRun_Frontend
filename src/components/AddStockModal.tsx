@@ -80,9 +80,9 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
             try {
                 // Sending data to the addStock endpoint
                 const response = await axios.post('/stockData/addStock', {
-                    ticker: selectedStock.ticker,
+                    symbol: selectedStock.ticker,
+                    sharesOwned: parseFloat(sharesOwned),
                     name: selectedStock.name,
-                    sharesOwned,
                 });
 
                 // You can handle the response here, for example, show a success message
@@ -161,6 +161,9 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0}
                 >
                     Add Stock
+                </Button>
+                <Button variant="contained" color="secondary" onClick={handleClose} fullWidth>
+                    Cancel
                 </Button>
             </Box>
         </Modal>

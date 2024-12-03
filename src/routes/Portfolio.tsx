@@ -28,6 +28,7 @@ const Portfolio = () => {
                 </div>
             ),
         },
+        { field: 'name', headerName: 'Company Name', width: 150 },
         { field: 'closePrice', headerName: 'Close Price', type: 'number', width: 150 },
         { field: 'sharesOwned', headerName: 'Shares Owned', type: 'number', width: 150 },
         {
@@ -35,7 +36,6 @@ const Portfolio = () => {
             headerName: 'Current Value',
             type: 'number',
             width: 150,
-            valueFormatter: (params: { value: number }) => `$${params.value}`,
         },
     ];
 
@@ -60,6 +60,7 @@ const Portfolio = () => {
         console.log('Stock added:', stock);
         // Add stock to your state or send it to the backend
     };
+
     return (
         <Container maxWidth="lg">
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
@@ -76,7 +77,12 @@ const Portfolio = () => {
                     </Button>
                     <AddStockModal
                         open={isModalOpen}
-                        handleClose={() => setModalOpen(false)}
+                        handleClose={() => {
+                            setModalOpen(false);
+                            getUserStocks().then((response) => {
+                                setRows(response.data);
+                            });
+                        }}
                         handleAddStock={handleAddStock}
                     />
                 </div>
