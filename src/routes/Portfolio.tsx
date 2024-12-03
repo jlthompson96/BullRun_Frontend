@@ -35,6 +35,7 @@ const Portfolio = () => {
             headerName: 'Current Value',
             type: 'number',
             width: 150,
+            valueFormatter: (params: { value: number }) => `$${params.value}`,
         },
     ];
 
@@ -44,6 +45,7 @@ const Portfolio = () => {
             setRows(response.data);
         });
     }, []);
+
     const [isModalOpen, setModalOpen] = useState(false);
 
     interface Stock {
@@ -78,7 +80,6 @@ const Portfolio = () => {
                         handleAddStock={handleAddStock}
                     />
                 </div>
-
             </Paper>
         </Container>
     );
