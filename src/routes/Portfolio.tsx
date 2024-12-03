@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Paper, Typography } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Button, Container, Paper, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { getUserStocks } from "../service/UserServices";
+import AddStockModal from '../components/AddStockModal';
 
 const Portfolio = () => {
     const [rows, setRows] = useState([]);
@@ -39,12 +40,26 @@ const Portfolio = () => {
     ];
 
     useEffect(() => {
-        getUserStocks('userId').then((response) => {
+        getUserStocks().then((response) => {
             console.log(response.data);
             setRows(response.data);
         });
     }, []);
 
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    interface Stock {
+        symbol: string;
+        closePrice: number;
+        sharesOwned: number;
+        currentValue: number;
+        logoImage: string;
+    }
+
+    const handleAddStock = (stock: Stock) => {
+        console.log('Stock added:', stock);
+        // Add stock to your state or send it to the backend
+    };
     return (
         <Container maxWidth="lg">
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
@@ -53,6 +68,17 @@ const Portfolio = () => {
                 </Typography>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid rows={rows} columns={columns} />
+                </div>
+
+                <div>
+                    <Button variant="contained" onClick={() => setModalOpen(true)}>
+                        Add Stock
+                    </Button>
+                    <AddStockModal
+                        open={isModalOpen}
+                        handleClose={() => setModalOpen(false)}
+                        handleAddStock={handleAddStock}
+                    />
                 </div>
             </Paper>
         </Container>
