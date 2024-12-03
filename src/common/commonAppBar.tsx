@@ -7,6 +7,7 @@ import Dashboard from "../routes/Dashboard";
 import StockNews from "../routes/StockNews";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import Portfolio from "../routes/Portfolio";
 
 const CommonAppBar = () => {
     const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
@@ -18,6 +19,7 @@ const CommonAppBar = () => {
 
     const menuItems = [
         { link: "/dashboard", text: "Dashboard" },
+        { link: "/portfolio", text: "Portfolio" },
         { link: "/stockAnalyzer", text: "Stock Analyzer" },
         { link: "/learningCenter", text: "Learning Center" },
         { link: "/news", text: "News" },
@@ -58,6 +60,7 @@ const App = () => {
             <CommonAppBar />
             <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/portfolio" element={<Portfolio />} />
                 <Route path="/stockAnalyzer" element={<StockSearch />} />
                 <Route path="/learningCenter" element={<LearningCenter />} />
                 <Route path="/news" element={<StockNews />} />
