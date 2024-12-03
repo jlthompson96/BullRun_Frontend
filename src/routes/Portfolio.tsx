@@ -10,7 +10,7 @@ const Portfolio = () => {
     const columns: GridColDef[] = [
         {
             field: 'symbol',
-            headerName: 'Symbol',
+            headerName: '',
             width: 150,
             renderCell: (params) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -28,7 +28,7 @@ const Portfolio = () => {
                 </div>
             ),
         },
-        { field: 'name', headerName: 'Company Name', width: 150 },
+        { field: 'name', headerName: 'Company Name', width: 150, valueGetter: (params) => params.replace(/(Common Stock|Class A)/g, '').trim() },
         { field: 'closePrice', headerName: 'Close Price', type: 'number', width: 150 },
         { field: 'sharesOwned', headerName: 'Shares Owned', type: 'number', width: 150 },
         {
@@ -68,10 +68,14 @@ const Portfolio = () => {
                     Portfolio
                 </Typography>
                 <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid rows={rows} columns={columns} />
+                    <DataGrid rows={rows} columns={columns} initialState={{
+                        pagination: { paginationModel: { pageSize: 5 } },
+                    }}
+                        pageSizeOptions={[5, 10, 25, { value: -1, label: 'All' }]} />
                 </div>
 
                 <div>
+                    <br />
                     <Button variant="contained" onClick={() => setModalOpen(true)}>
                         Add Stock
                     </Button>
