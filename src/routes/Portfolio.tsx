@@ -5,12 +5,16 @@ import { getUserStocks } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
 
 const Portfolio = () => {
-    const [rows, setRows] = useState([]);
+    const [rows, setRows] = useState<Stock[]>([]);
+
+    const cleanCompanyName = (name: string) => {
+        return name.replace(/(Common Stock|Class A)/g, '').trim();
+    };
 
     const columns: GridColDef[] = [
         {
             field: 'symbol',
-            headerName: '',
+            headerName: 'Symbol',
             width: 150,
             renderCell: (params) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -28,7 +32,16 @@ const Portfolio = () => {
                 </div>
             ),
         },
-        { field: 'name', headerName: 'Company Name', width: 150, valueGetter: (params) => params.replace(/(Common Stock|Class A)/g, '').trim() },
+        {
+            field: 'name',
+            headerName: 'Company Name',
+            width: 150,
+            valueGetter: (params: { row: { name?: string } }) => {
+                const name = params;
+                console.log('Company Name:', name);
+                return typeof name === 'string' ? cleanCompanyName(name) : '';
+            },
+        },
         { field: 'closePrice', headerName: 'Close Price', type: 'number', width: 150 },
         { field: 'sharesOwned', headerName: 'Shares Owned', type: 'number', width: 150 },
         {
@@ -56,9 +69,24 @@ const Portfolio = () => {
         logoImage: string;
     }
 
-    const handleAddStock = (stock: Stock) => {
-        console.log('Stock added:', stock);
-        // Add stock to your state or send it to the backend
+    interface StockOption {
+        ticker: string;
+        name: string;
+    }
+
+    const handleAddStock = (stock: StockOption, shares: string) => {
+        const newStock: Stock = {
+            symbol: stock.ticker, // Use `ticker` from StockOption
+            closePrice: 0, // Replace with actual value if available
+            sharesOwned: parseFloat(shares), // Convert shares from string to number
+            currentValue: 0, // Replace with actual value if available
+            logoImage: '', // Replace with actual image source if available
+        };
+
+        console.log('Stock added:', newStock);
+
+        // Optionally, update the state to reflect the new stock
+        setRows((prevRows) => [...prevRows, newStock]);
     };
 
     return (
@@ -89,6 +117,7 @@ const Portfolio = () => {
                         }}
                         handleAddStock={handleAddStock}
                     />
+
                 </div>
             </Paper>
         </Container>

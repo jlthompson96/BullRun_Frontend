@@ -1,4 +1,17 @@
-import { AppBar, MenuItem, Toolbar, Typography, useMediaQuery, Drawer, List, ListItem, ListItemText, IconButton, Theme } from "@mui/material";
+import {
+    AppBar,
+    MenuItem,
+    Toolbar,
+    Typography,
+    useMediaQuery,
+    Drawer,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    IconButton,
+    Theme
+} from "@mui/material";
 import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import StockSearch from "../routes/StockSearch";
 import BullRunLogo from "../assets/BullRunLogo.png";
@@ -37,8 +50,10 @@ const CommonAppBar = () => {
                         <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
                             <List>
                                 {menuItems.map((item, index) => (
-                                    <ListItem button key={index} component={Link} to={item.link} onClick={handleDrawerToggle}>
-                                        <ListItemText primary={item.text} />
+                                    <ListItem key={index} disablePadding>
+                                        <ListItemButton component={Link} to={item.link} onClick={handleDrawerToggle}>
+                                            <ListItemText primary={item.text} />
+                                        </ListItemButton>
                                     </ListItem>
                                 ))}
                             </List>
@@ -46,7 +61,13 @@ const CommonAppBar = () => {
                     </>
                 ) : (
                     menuItems.map((item, index) => (
-                        <MenuItem key={index}><Typography variant="h6"><Link to={item.link} style={{ color: 'white', textDecoration: 'none', padding: '10px' }}>{item.text}</Link></Typography></MenuItem>
+                        <MenuItem key={index}>
+                            <Typography variant="h6">
+                                <Link to={item.link} style={{ color: 'white', textDecoration: 'none', padding: '10px' }}>
+                                    {item.text}
+                                </Link>
+                            </Typography>
+                        </MenuItem>
                     ))
                 )}
             </Toolbar>
