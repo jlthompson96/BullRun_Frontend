@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/stockData':'http://localhost:8080',
-      '/users':'http://localhost:8080'
+      '/stockData':'https://bull-run-frontend.vercel.app',
+      '/users':'https://bull-run-frontend.vercel.app'
     }
   }
 });
