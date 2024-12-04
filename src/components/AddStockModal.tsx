@@ -120,7 +120,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
     return (
         <Modal open={open} onClose={handleClose}>
             <Box sx={style}>
-                <Typography variant="h6" component="h2" mb={2}>
+                <Typography variant="h6" component="h2" color='black' mb={2}>
                     Add New Stock
                 </Typography>
 
@@ -142,7 +142,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     <CircularProgress size={20} sx={{ display: 'block', margin: '10px auto' }} />
                 )}
                 {!searchLoading && companyName && (
-                    <Typography variant="body1" sx={{ mb: 2 }}>
+                    <Typography variant="body1" color='black' sx={{ mb: 2 }}>
                         Add <b>{companyName.replace(/(Common Stock|Class A)/g, '').trim()}</b> to your portfolio?
                     </Typography>
                 )}
@@ -159,13 +159,14 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                 <Button
                     variant="contained"
                     color="primary"
+                    sx={{ marginTop: '1em' }}
                     onClick={handleSubmit}
                     fullWidth
                     disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading}
                 >
                     {loading ? <CircularProgress size={24} /> : 'Add Stock'}
                 </Button>
-                <Button variant="contained" color="secondary" onClick={handleClose} fullWidth>
+                <Button variant="contained" color="secondary" sx={{ marginTop: '1em' }} onClick={handleClose} fullWidth>
                     Cancel
                 </Button>
             </Box>
