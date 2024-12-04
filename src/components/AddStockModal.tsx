@@ -39,6 +39,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
     const [selectedStock, setSelectedStock] = useState<StockOption | null>(null);
     const [sharesOwned, setSharesOwned] = useState('');
     const [loading, setLoading] = useState(false);
+    const [searchLoading, setSearchLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -48,7 +49,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
         }
 
         const debounceTimeout = setTimeout(async () => {
-            setLoading(true);
+            setSearchLoading(true);
             setError(null);
 
             try {
@@ -68,7 +69,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                 setCompanyName('');
                 setSelectedStock(null);
             } finally {
-                setLoading(false);
+                setSearchLoading(false);
             }
         }, 500); // 500ms debounce duration
 
@@ -77,12 +78,13 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
 
     const handleSubmit = async () => {
         if (selectedStock && sharesOwned) {
+            setLoading(true);
             try {
                 // Sending data to the addStock endpoint
                 const response = await axios.post('/stockData/addStock', {
-                    ticker: selectedStock.ticker,
+                    symbol: selectedStock.ticker,
+                    sharesOwned: parseFloat(sharesOwned),
                     name: selectedStock.name,
-                    sharesOwned,
                 });
 
                 // You can handle the response here, for example, show a success message
@@ -102,6 +104,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
         } else {
             setError('Please select a stock and enter the number of shares.');
         }
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -117,7 +120,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
     return (
         <Modal open={open} onClose={handleClose}>
             <Box sx={style}>
-                <Typography variant="h6" component="h2" mb={2}>
+                <Typography variant="h6" component="h2" color='black' mb={2}>
                     Add New Stock
                 </Typography>
 
@@ -135,11 +138,11 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     fullWidth
                     sx={{ mb: 2 }}
                 />
-                {loading && (
+                {searchLoading && (
                     <CircularProgress size={20} sx={{ display: 'block', margin: '10px auto' }} />
                 )}
-                {!loading && companyName && (
-                    <Typography variant="body1" sx={{ mb: 2 }}>
+                {!searchLoading && companyName && (
+                    <Typography variant="body1" color='black' sx={{ mb: 2 }}>
                         Add <b>{companyName.replace(/(Common Stock|Class A)/g, '').trim()}</b> to your portfolio?
                     </Typography>
                 )}
@@ -156,11 +159,15 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                 <Button
                     variant="contained"
                     color="primary"
+                    sx={{ marginTop: '1em' }}
                     onClick={handleSubmit}
                     fullWidth
-                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0}
+                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading}
                 >
-                    Add Stock
+                    {loading ? <CircularProgress size={24} /> : 'Add Stock'}
+                </Button>
+                <Button variant="contained" color="secondary" sx={{ marginTop: '1em' }} onClick={handleClose} fullWidth>
+                    Cancel
                 </Button>
             </Box>
         </Modal>

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import "./StockSearch.scss"; // Assuming you have a custom CSS file
 import { getCompanyLogo, getCompanyProfile, getPreviousClose, getStockPrice } from "../service/StockServices";
-import { CompanyProfile, StockData } from "../common/types";
+import { StockData } from "../common/types";
 
 const StockSearch: React.FC = () => {
     const [symbol, setSymbol] = useState<string>("");
@@ -77,6 +77,19 @@ const StockSearch: React.FC = () => {
         setLoading(false);
     };
 
+    interface CompanyProfile {
+        results: {
+            name: string;
+            description: string;
+            market_cap: number;
+            sic_description: string;
+            total_employees?: number; // Add this line
+            homepage_url?: string;    // Add this line
+            // Add other properties as needed
+        };
+        // Add other properties as needed
+    }
+
     function formatMarketCap(marketCap: number) {
         if (marketCap >= 1.0e+12) {
             return (marketCap / 1.0e+12).toFixed(2) + " Trillion";
@@ -106,7 +119,7 @@ const StockSearch: React.FC = () => {
                     variant="outlined"
                     label="Stock Symbol"
                     value={symbol}
-                    onChange={(e) => setSymbol(e.target.value)}
+                    onChange={(e) => setSymbol(e.target.value.toLocaleUpperCase())}
                     placeholder="Enter a stock symbol"
                     fullWidth
                     margin="normal"
@@ -182,7 +195,7 @@ const StockSearch: React.FC = () => {
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '50px' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Market Cap</Typography>
-                                <b><p>{formatMarketCap(companyProfile?.results?.market_cap)}</p></b>
+                                <b><p>{companyProfile?.results?.market_cap !== undefined ? formatMarketCap(companyProfile.results.market_cap) : "N/A"}</p></b>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Sector</Typography>
@@ -190,12 +203,12 @@ const StockSearch: React.FC = () => {
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Number of Employees</Typography>
-                                <b><p>{companyProfile?.results?.total_employees.toLocaleString()}</p></b>
+                                <b><p>{companyProfile?.results?.total_employees?.toLocaleString() ?? "N/A"}</p></b>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="h6">Website</Typography>
-                                <a href={companyProfile?.results?.homepage_url} target="_blank" rel="noreferrer">
-                                    {companyProfile?.results?.homepage_url}
+                                <a href={companyProfile?.results?.homepage_url ?? "#"} target="_blank" rel="noreferrer">
+                                    {companyProfile?.results?.homepage_url ?? "N/A"}
                                 </a>
                             </div>
                         </div>

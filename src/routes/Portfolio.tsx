@@ -5,7 +5,11 @@ import { getUserStocks } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
 
 const Portfolio = () => {
-    const [rows, setRows] = useState([]);
+    const [rows, setRows] = useState<Stock[]>([]);
+
+    const cleanCompanyName = (name: string) => {
+        return name.replace(/(Common Stock|Class A)/g, '').trim();
+    };
 
     const columns: GridColDef[] = [
         {
@@ -28,6 +32,16 @@ const Portfolio = () => {
                 </div>
             ),
         },
+        {
+            field: 'name',
+            headerName: 'Company Name',
+            width: 150,
+            valueGetter: (params: { row: { name?: string } }) => {
+                const name = params;
+                console.log('Company Name:', name);
+                return typeof name === 'string' ? cleanCompanyName(name) : '';
+            },
+        },
         { field: 'closePrice', headerName: 'Close Price', type: 'number', width: 150 },
         { field: 'sharesOwned', headerName: 'Shares Owned', type: 'number', width: 150 },
         {
@@ -35,7 +49,6 @@ const Portfolio = () => {
             headerName: 'Current Value',
             type: 'number',
             width: 150,
-            valueFormatter: (params: { value: number }) => `$${params.value}`,
         },
     ];
 
@@ -56,10 +69,26 @@ const Portfolio = () => {
         logoImage: string;
     }
 
-    const handleAddStock = (stock: Stock) => {
-        console.log('Stock added:', stock);
-        // Add stock to your state or send it to the backend
+    interface StockOption {
+        ticker: string;
+        name: string;
+    }
+
+    const handleAddStock = (stock: StockOption, shares: string) => {
+        const newStock: Stock = {
+            symbol: stock.ticker, // Use `ticker` from StockOption
+            closePrice: 0, // Replace with actual value if available
+            sharesOwned: parseFloat(shares), // Convert shares from string to number
+            currentValue: 0, // Replace with actual value if available
+            logoImage: '', // Replace with actual image source if available
+        };
+
+        console.log('Stock added:', newStock);
+
+        // Optionally, update the state to reflect the new stock
+        setRows((prevRows) => [...prevRows, newStock]);
     };
+
     return (
         <Container maxWidth="lg">
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
@@ -67,18 +96,28 @@ const Portfolio = () => {
                     Portfolio
                 </Typography>
                 <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid rows={rows} columns={columns} />
+                    <DataGrid rows={rows} columns={columns} initialState={{
+                        pagination: { paginationModel: { pageSize: 5 } },
+                    }}
+                        pageSizeOptions={[5, 10, 25, { value: -1, label: 'All' }]} />
                 </div>
 
                 <div>
+                    <br />
                     <Button variant="contained" onClick={() => setModalOpen(true)}>
                         Add Stock
                     </Button>
                     <AddStockModal
                         open={isModalOpen}
-                        handleClose={() => setModalOpen(false)}
+                        handleClose={() => {
+                            setModalOpen(false);
+                            getUserStocks().then((response) => {
+                                setRows(response.data);
+                            });
+                        }}
                         handleAddStock={handleAddStock}
                     />
+
                 </div>
             </Paper>
         </Container>
