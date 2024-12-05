@@ -38,7 +38,6 @@ const Portfolio = () => {
             width: 150,
             valueGetter: (params: { row: { name?: string } }) => {
                 const name = params;
-                console.log('Company Name:', name);
                 return typeof name === 'string' ? cleanCompanyName(name) : '';
             },
         },
