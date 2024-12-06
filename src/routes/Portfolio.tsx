@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Button, Container, Paper, Typography } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { getUserStocks } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
+import axios from 'axios';
 
 const Portfolio = () => {
     const [rows, setRows] = useState<Stock[]>([]);
+    const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]); // State for selected rows
 
     const cleanCompanyName = (name: string) => {
         return name.replace(/(Common Stock|Class A)/g, '').trim();
@@ -38,7 +40,6 @@ const Portfolio = () => {
             width: 150,
             valueGetter: (params: { row: { name?: string } }) => {
                 const name = params;
-                console.log('Company Name:', name);
                 return typeof name === 'string' ? cleanCompanyName(name) : '';
             },
         },
@@ -49,6 +50,9 @@ const Portfolio = () => {
             headerName: 'Current Value',
             type: 'number',
             width: 150,
+            valueFormatter: (params) => {
+                return `$${(params as number).toLocaleString()}`;
+            }
         },
     ];
 
@@ -62,6 +66,7 @@ const Portfolio = () => {
     const [isModalOpen, setModalOpen] = useState(false);
 
     interface Stock {
+        id: string; // Add a unique id field to your data model
         symbol: string;
         closePrice: number;
         sharesOwned: number;
@@ -76,17 +81,35 @@ const Portfolio = () => {
 
     const handleAddStock = (stock: StockOption, shares: string) => {
         const newStock: Stock = {
-            symbol: stock.ticker, // Use `ticker` from StockOption
-            closePrice: 0, // Replace with actual value if available
-            sharesOwned: parseFloat(shares), // Convert shares from string to number
-            currentValue: 0, // Replace with actual value if available
-            logoImage: '', // Replace with actual image source if available
+            id: `${Date.now()}`, // Temporary unique ID
+            symbol: stock.ticker,
+            closePrice: 0,
+            sharesOwned: parseFloat(shares),
+            currentValue: 0,
+            logoImage: '',
         };
 
         console.log('Stock added:', newStock);
 
-        // Optionally, update the state to reflect the new stock
         setRows((prevRows) => [...prevRows, newStock]);
+    };
+
+    const handleDeleteStock = () => {
+        if (selectionModel.length === 0) {
+            alert('Please select a stock to delete.');
+            return;
+        }
+
+        const stockId = selectionModel[0];
+        axios.delete('/stockData/deleteStock', { data: stockId }) // Pass the stockId in the request body
+            .then(() => {
+                setRows((prevRows) => prevRows.filter((row) => row.id !== stockId));
+                setSelectionModel([]); // Clear the selection
+            })
+            .catch((error) => {
+                console.error('Failed to delete stock:', error);
+                alert('Failed to delete the stock. Please try again.');
+            });
     };
 
     return (
@@ -96,17 +119,29 @@ const Portfolio = () => {
                     Portfolio
                 </Typography>
                 <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid rows={rows} columns={columns} initialState={{
-                        pagination: { paginationModel: { pageSize: 5 } },
-                    }}
-                        pageSizeOptions={[5, 10, 25, { value: -1, label: 'All' }]} />
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        initialState={{
+                            pagination: { paginationModel: { pageSize: 5 } },
+                        }}
+                        pageSizeOptions={[5, 10, 25, { value: -1, label: 'All' }]}
+                        checkboxSelection
+                        disableMultipleRowSelection
+                        onRowSelectionModelChange={(newSelection) => setSelectionModel(newSelection)}
+                    />
                 </div>
 
                 <div>
                     <br />
-                    <Button variant="contained" onClick={() => setModalOpen(true)}>
+                    <Button variant="contained" onClick={() => setModalOpen(true)} sx={{ marginRight: '10px' }}>
                         Add Stock
                     </Button>
+                    {selectionModel.length === 1 && ( // Show delete button only for single selection
+                        <Button variant="contained" color="error" onClick={handleDeleteStock}>
+                            Delete Stock
+                        </Button>
+                    )}
                     <AddStockModal
                         open={isModalOpen}
                         handleClose={() => {
@@ -117,8 +152,9 @@ const Portfolio = () => {
                         }}
                         handleAddStock={handleAddStock}
                     />
-
                 </div>
+
+
             </Paper>
         </Container>
     );
