@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Container, Paper, Typography } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { getUserStocks } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
@@ -7,7 +7,11 @@ import axios from 'axios';
 
 const Portfolio = () => {
     const [rows, setRows] = useState<Stock[]>([]);
-    const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]); // State for selected rows
+    const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]);
+    // const [isModalOpen, setModalOpen] = useState(false); // Duplicate declaration removed
+    const [isConfirmOpen, setConfirmOpen] = useState(false);
+    const [selectedStockId, setSelectedStockId] = useState<string | null>(null); // Stock to be deleted
+    // State for selected rows
 
     const cleanCompanyName = (name: string) => {
         return name.replace(/(Common Stock|Class A)/g, '').trim();
@@ -100,17 +104,25 @@ const Portfolio = () => {
             return;
         }
 
-        const stockId = selectionModel[0];
-        axios.delete('/stockData/deleteStock', { data: stockId }) // Pass the stockId in the request body
+        setSelectedStockId(selectionModel[0] as string);
+        setConfirmOpen(true); // Open the confirmation dialog
+    };
+
+    const confirmDeleteStock = () => {
+        if (!selectedStockId) return;
+
+        axios.delete('/stockData/deleteStock', { data: { id: selectedStockId } })
             .then(() => {
-                setRows((prevRows) => prevRows.filter((row) => row.id !== stockId));
+                setRows((prevRows) => prevRows.filter((row) => row.id !== selectedStockId));
                 setSelectionModel([]); // Clear the selection
+                setConfirmOpen(false); // Close the confirmation dialog
             })
             .catch((error) => {
                 console.error('Failed to delete stock:', error);
                 alert('Failed to delete the stock. Please try again.');
             });
     };
+    const selectedStock = rows.find((row) => row.id === selectedStockId);
 
     return (
         <Container maxWidth="lg">
@@ -154,9 +166,28 @@ const Portfolio = () => {
                     />
                 </div>
 
-
+                {/* Confirmation Dialog */}
+                <Dialog open={isConfirmOpen} onClose={() => setConfirmOpen(false)}>
+                    <DialogTitle>Confirm Deletion</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Are you sure you want to delete the stock{' '}
+                            <strong>{selectedStock?.symbol || 'this stock'}</strong>?
+                            <br />
+                            This action cannot be undone.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setConfirmOpen(false)} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={confirmDeleteStock} color="error">
+                            Confirm
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Paper>
-        </Container>
+        </Container >
     );
 };
 
