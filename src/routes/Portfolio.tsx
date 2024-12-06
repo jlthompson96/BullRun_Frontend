@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Snackbar, Alert, Typography, AlertColor } from '@mui/material';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { getUserStocks } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
@@ -8,10 +8,9 @@ import axios from 'axios';
 const Portfolio = () => {
     const [rows, setRows] = useState<Stock[]>([]);
     const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]);
-    // const [isModalOpen, setModalOpen] = useState(false); // Duplicate declaration removed
-    const [isConfirmOpen, setConfirmOpen] = useState(false);
-    const [selectedStockId, setSelectedStockId] = useState<string | null>(null); // Stock to be deleted
-    // State for selected rows
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [selectedStockId, setSelectedStockId] = useState<string | null>(null);
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' }); // Snackbar state
 
     const cleanCompanyName = (name: string) => {
         return name.replace(/(Common Stock|Class A)/g, '').trim();
@@ -67,22 +66,20 @@ const Portfolio = () => {
         });
     }, []);
 
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     interface Stock {
-        id: string; // Add a unique id field to your data model
+        id: string;
         symbol: string;
         closePrice: number;
         sharesOwned: number;
         currentValue: number;
         logoImage: string;
     }
-
     interface StockOption {
         ticker: string;
         name: string;
     }
-
     const handleAddStock = (stock: StockOption, shares: string) => {
         const newStock: Stock = {
             id: `${Date.now()}`, // Temporary unique ID
@@ -93,9 +90,8 @@ const Portfolio = () => {
             logoImage: '',
         };
 
-        console.log('Stock added:', newStock);
-
         setRows((prevRows) => [...prevRows, newStock]);
+        setSnackbar({ open: true, message: 'Stock added successfully!', severity: 'success' }); // Show success snackbar
     };
 
     const handleDeleteStock = () => {
@@ -105,28 +101,34 @@ const Portfolio = () => {
         }
 
         setSelectedStockId(selectionModel[0] as string);
-        setConfirmOpen(true); // Open the confirmation dialog
+        setIsConfirmOpen(true);
     };
 
     const confirmDeleteStock = () => {
         if (!selectedStockId) return;
 
-        axios.delete('/stockData/deleteStock', { data: { id: selectedStockId } })
+        axios.delete('/stockData/deleteStock', { data: selectedStock?.symbol })
             .then(() => {
                 setRows((prevRows) => prevRows.filter((row) => row.id !== selectedStockId));
-                setSelectionModel([]); // Clear the selection
-                setConfirmOpen(false); // Close the confirmation dialog
+                setSelectionModel([]);
+                setSnackbar({ open: true, message: 'Stock deleted successfully!', severity: 'success' }); // Show success snackbar
             })
             .catch((error) => {
                 console.error('Failed to delete stock:', error);
-                alert('Failed to delete the stock. Please try again.');
-            });
+                setSnackbar({ open: true, message: 'Failed to delete the stock. Please try again.', severity: 'error' }); // Show error snackbar
+            })
+            .finally(() => setIsConfirmOpen(false));
     };
+
+    const handleCloseSnackbar = () => {
+        setSnackbar((prev) => ({ ...prev, open: false }));
+    };
+
     const selectedStock = rows.find((row) => row.id === selectedStockId);
 
     return (
         <Container maxWidth="lg">
-            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }}>
                 <Typography variant="h5" gutterBottom>
                     Portfolio
                 </Typography>
@@ -137,19 +139,18 @@ const Portfolio = () => {
                         initialState={{
                             pagination: { paginationModel: { pageSize: 5 } },
                         }}
-                        pageSizeOptions={[5, 10, 25, { value: -1, label: 'All' }]}
+                        pageSizeOptions={[5, 10, 25]}
                         checkboxSelection
                         disableMultipleRowSelection
                         onRowSelectionModelChange={(newSelection) => setSelectionModel(newSelection)}
                     />
                 </div>
-
                 <div>
                     <br />
-                    <Button variant="contained" onClick={() => setModalOpen(true)} sx={{ marginRight: '10px' }}>
+                    <Button variant="contained" onClick={() => setIsModalOpen(true)} sx={{ marginRight: '10px' }}>
                         Add Stock
                     </Button>
-                    {selectionModel.length === 1 && ( // Show delete button only for single selection
+                    {selectionModel.length === 1 && (
                         <Button variant="contained" color="error" onClick={handleDeleteStock}>
                             Delete Stock
                         </Button>
@@ -157,7 +158,7 @@ const Portfolio = () => {
                     <AddStockModal
                         open={isModalOpen}
                         handleClose={() => {
-                            setModalOpen(false);
+                            setIsModalOpen(false);
                             getUserStocks().then((response) => {
                                 setRows(response.data);
                             });
@@ -165,20 +166,15 @@ const Portfolio = () => {
                         handleAddStock={handleAddStock}
                     />
                 </div>
-
-                {/* Confirmation Dialog */}
-                <Dialog open={isConfirmOpen} onClose={() => setConfirmOpen(false)}>
+                <Dialog open={isConfirmOpen} onClose={() => setIsConfirmOpen(false)}>
                     <DialogTitle>Confirm Deletion</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Are you sure you want to delete the stock{' '}
-                            <strong>{selectedStock?.symbol || 'this stock'}</strong>?
-                            <br />
-                            This action cannot be undone.
+                            Are you sure you want to delete the stock <strong>{selectedStock?.symbol ?? 'this stock'}</strong>?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setConfirmOpen(false)} color="primary">
+                        <Button onClick={() => setIsConfirmOpen(false)} color="primary">
                             Cancel
                         </Button>
                         <Button onClick={confirmDeleteStock} color="error">
@@ -186,8 +182,20 @@ const Portfolio = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
+
+                {/* Snackbar */}
+                <Snackbar
+                    open={snackbar.open}
+                    autoHideDuration={6000}
+                    onClose={handleCloseSnackbar}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert onClose={handleCloseSnackbar} severity={snackbar.severity as AlertColor} sx={{ width: '100%' }}>
+                        {snackbar.message}
+                    </Alert>
+                </Snackbar>
             </Paper>
-        </Container >
+        </Container>
     );
 };
 
