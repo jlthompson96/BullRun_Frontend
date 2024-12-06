@@ -9,6 +9,7 @@ import {
     Alert,
 } from '@mui/material';
 import axios from 'axios';
+import { addUserStock } from '../service/UserServices';
 
 const style = {
     position: 'absolute',
@@ -81,16 +82,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
         if (selectedStock && sharesOwned) {
             setLoading(true);
             try {
-                // Sending data to the addStock endpoint
-                const response = await axios.post('/stockData/addStock', {
-                    symbol: selectedStock.ticker,
-                    sharesOwned: sharesOwned,
-                    name: selectedStock.name,
-                    costBasis: costBasis,
-                });
-
-                // You can handle the response here, for example, show a success message
-                console.log(response.data);
+                await addUserStock(selectedStock.ticker, selectedStock.name, parseFloat(sharesOwned), parseFloat(costBasis));
 
                 // Close modal and reset states
                 handleAddStock(selectedStock, sharesOwned);
