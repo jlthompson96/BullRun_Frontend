@@ -38,6 +38,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
     const [companyName, setCompanyName] = useState('');
     const [selectedStock, setSelectedStock] = useState<StockOption | null>(null);
     const [sharesOwned, setSharesOwned] = useState('');
+    const [costBasis, setCostBasis] = useState('');
     const [loading, setLoading] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -83,8 +84,9 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                 // Sending data to the addStock endpoint
                 const response = await axios.post('/stockData/addStock', {
                     symbol: selectedStock.ticker,
-                    sharesOwned: parseFloat(sharesOwned),
+                    sharesOwned: sharesOwned,
                     name: selectedStock.name,
+                    costBasis: costBasis,
                 });
 
                 // You can handle the response here, for example, show a success message
@@ -97,6 +99,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                 setSharesOwned('');
                 setTickerInput('');
                 setCompanyName('');
+                setCostBasis('');
             } catch (err) {
                 console.error('Error submitting stock data:', err);
                 setError('Failed to add stock. Please try again.');
@@ -113,6 +116,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
             setSharesOwned('');
             setTickerInput('');
             setCompanyName('');
+            setCostBasis('');
             setError(null);
         }
     }, [open]);
@@ -156,13 +160,22 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     fullWidth
                     sx={{ mb: 2 }}
                 />
+                <TextField
+                    label="Cost Basis ($)"
+                    type="number"
+                    value={costBasis}
+                    onChange={(e) => setCostBasis(e.target.value)}
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                />
                 <Button
                     variant="contained"
                     color="primary"
                     sx={{ marginTop: '1em' }}
                     onClick={handleSubmit}
                     fullWidth
-                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading}
+                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading || !costBasis}
                 >
                     {loading ? <CircularProgress size={24} /> : 'Add Stock'}
                 </Button>
