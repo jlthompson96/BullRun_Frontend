@@ -126,6 +126,10 @@ const Portfolio = () => {
 
     const selectedStock = rows.find((row) => row.id === selectedStockId);
 
+    const calculateTotalCurrentValue = () => {
+        return rows.reduce((total, stock) => total + stock.currentValue, 0);
+    };
+
     return (
         <Container maxWidth="lg">
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }}>
@@ -139,12 +143,16 @@ const Portfolio = () => {
                         initialState={{
                             pagination: { paginationModel: { pageSize: 5 } },
                         }}
+                        loading={rows.length === 0}
                         pageSizeOptions={[5, 10, 25]}
                         checkboxSelection
                         disableMultipleRowSelection
                         onRowSelectionModelChange={(newSelection) => setSelectionModel(newSelection)}
                     />
                 </div>
+                <Typography variant="h6" sx={{ marginTop: '20px' }}>
+                    Total Current Value: ${calculateTotalCurrentValue().toLocaleString()}
+                </Typography>
                 <div>
                     <br />
                     <Button variant="contained" onClick={() => setIsModalOpen(true)} sx={{ marginRight: '10px' }}>

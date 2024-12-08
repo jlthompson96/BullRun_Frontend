@@ -8,8 +8,8 @@ import {
     CircularProgress,
     Alert,
 } from '@mui/material';
-import axios from 'axios';
 import { addUserStock } from '../service/UserServices';
+import { getCompanyProfile } from '../service/StockServices';
 
 const style = {
     position: 'absolute',
@@ -55,7 +55,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
             setError(null);
 
             try {
-                const response = await axios.get(`/stockData/companyProfile?symbol=${tickerInput.toUpperCase()}`);
+                const response = await getCompanyProfile(tickerInput.toUpperCase());
                 const result = response.data.results;
 
                 if (result?.name) {
