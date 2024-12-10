@@ -29,7 +29,7 @@ const LearningCenter = () => {
                 <Typography variant="h5" id="table-of-contents" gutterBottom>
                     Table of Contents
                 </Typography>
-                <Accordion>
+                <Accordion sx={{ backgroundColor: 'rgb(237, 242, 247)' }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography>Topics</Typography>
                     </AccordionSummary>
