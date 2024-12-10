@@ -1,4 +1,5 @@
-import { Button, Container, Paper, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Container, Divider, List, ListItem, ListItemText, Paper, TextField, Typography } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CompoundChartExample from "../common/CompountChartExample";
 import { useState } from "react";
 
@@ -16,17 +17,49 @@ const LearningCenter = () => {
     return (
         <Container maxWidth="lg">
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h4" align="center" gutterBottom>
                     Learning Center
                 </Typography>
-                <hr />
-                <Typography variant="body1">
-                    Welcome to the Learning Center! Here you can learn about the stock market, investing, and more. We have articles, tutorials, and videos to help you learn more about the stock market.
+                <Typography variant="subtitle1" align="center" gutterBottom>
+                    Explore concepts like Compound Interest, P/E Ratio, and more to enhance your financial knowledge.
                 </Typography>
+            </Paper>
+            <Divider sx={{ marginY: '20px' }} />
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+                <Typography variant="h5" id="table-of-contents" gutterBottom>
+                    Table of Contents
+                </Typography>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>Topics</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <List>
+                            <ListItem component="a" href="#stock-market-basics">
+                                <ListItemText primary="Stock Market Basics" />
+                            </ListItem>
+                            <ListItem component="a" href="#compound-interest">
+                                <ListItemText primary="Compound Interest" />
+                            </ListItem>
+                            <ListItem component="a" href="#pe-ratio">
+                                <ListItemText primary="Price to Earnings Ratio (P/E)" />
+                            </ListItem>
+                            <ListItem component="a" href="#dividend-yield">
+                                <ListItemText primary="Dividend Yield" />
+                            </ListItem>
+                            <ListItem component="a" href="#fair-value">
+                                <ListItemText primary="Fair Value Calculation" />
+                            </ListItem>
+                            <ListItem component="a" href="#future-value">
+                                <ListItemText primary="Future Value Calculation" />
+                            </ListItem>
+                        </List>
+                    </AccordionDetails>
+                </Accordion>
             </Paper>
             <div style={{ display: 'flex', columnGap: '5%', flexWrap: 'nowrap' }}>
                 <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" id="stock-market-basics" gutterBottom>
                         Stock Market Basics
                     </Typography>
                     <hr />
@@ -34,7 +67,7 @@ const LearningCenter = () => {
                         The stock market is a place where investors can buy and sell shares of publicly traded companies. The stock market is an essential part of the economy and plays a crucial role in the financial system. In this section, you will learn about the basics of the stock market, how it works, and how you can invest in it.
                     </Typography>
                 </Paper>
-                <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+                <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} id="stock-search-container">
                     <Typography variant="h5" gutterBottom>
                         Investing 101
                     </Typography>
@@ -45,7 +78,7 @@ const LearningCenter = () => {
                 </Paper>
             </div>
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" id="compound-interest" gutterBottom>
                     Compound Interest
                 </Typography>
                 <hr style={{ margin: '20px' }} />
@@ -88,10 +121,13 @@ const LearningCenter = () => {
                     Chart showing the growth of an investment of $1,000 at a 8% annual interest rate over 40 years.
                 </Typography>
                 <CompoundChartExample />
+                <Typography variant="body1" style={{ padding: '20px' }}>
+                    <a href="#table-of-contents">Back to Table of Contents</a>
+                </Typography>
             </Paper>
             {/* Create a section about calculating a stocks P/E */}
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" id="pe-ration" gutterBottom>
                     Price to Earnings Ratio (P/E)
                 </Typography>
                 <hr style={{ margin: '20px' }} />
@@ -124,10 +160,13 @@ const LearningCenter = () => {
                     <br />
                     <b>The company's P/E ratio is 10.</b>
                 </Typography>
+                <Typography variant="body1" style={{ padding: '20px' }}>
+                    <a href="#table-of-contents">Back to Table of Contents</a>
+                </Typography>
             </Paper>
             {/* Create a section about calculating a stocks Dividend Yield */}
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" id="dividend-yield" gutterBottom>
                     Dividend Yield
                 </Typography>
                 <hr style={{ margin: '20px' }} />
@@ -160,11 +199,14 @@ const LearningCenter = () => {
                     <br />
                     <b>The company's Dividend Yield is 4%.</b>
                 </Typography>
+                <Typography variant="body1" style={{ padding: '20px' }}>
+                    <a href="#table-of-contents">Back to Table of Contents</a>
+                </Typography>
             </Paper>
 
             {/* Create a section about calculating a stocks fair value */}
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" id="fair-value" gutterBottom>
                     Fair Value Calculation
                 </Typography>
                 <hr style={{ margin: '20px' }} />
@@ -200,11 +242,14 @@ const LearningCenter = () => {
                     <br />
                     <b>The company's Fair Value is $2.50.</b>
                 </Typography>
+                <Typography variant="body1" style={{ padding: '20px' }}>
+                    <a href="#table-of-contents">Back to Table of Contents</a>
+                </Typography>
             </Paper>
 
             {/* Create a section about calculating a stocks future value */}
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" id="future-value" gutterBottom>
                     Future Value Calculation
                 </Typography>
                 <hr style={{ margin: '20px' }} />
@@ -268,6 +313,9 @@ const LearningCenter = () => {
                         </Typography>
                     )}
                 </div>
+                <Typography variant="body1" style={{ padding: '20px' }}>
+                    <a href="#table-of-contents">Back to Table of Contents</a>
+                </Typography>
             </Paper>
 
         </Container>

@@ -33,7 +33,7 @@ const CommonAppBar = () => {
     const menuItems = [
         { link: "/dashboard", text: "Dashboard" },
         { link: "/portfolio", text: "Portfolio" },
-        { link: "/stockAnalyzer", text: "Stock Analyzer" },
+        { link: "/stockAnalyzer", text: "Stock Search" },
         { link: "/learningCenter", text: "Learning Center" },
         { link: "/news", text: "News" },
     ];

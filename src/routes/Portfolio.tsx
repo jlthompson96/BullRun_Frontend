@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Snackbar, Alert, Typography, AlertColor } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Snackbar, Alert, Typography, AlertColor, Divider } from '@mui/material';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { getUserStocks, updateSharesOwned } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
@@ -168,10 +168,16 @@ const Portfolio = () => {
 
     return (
         <Container maxWidth="lg">
-            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }}>
-                <Typography variant="h5" gutterBottom>
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+                <Typography variant="h4" align="center" gutterBottom>
                     Portfolio
                 </Typography>
+                <Typography variant="subtitle1" align="center" gutterBottom>
+                    Manage your stock portfolio here.
+                </Typography>
+            </Paper>
+            <Divider sx={{ marginY: '20px' }} />
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }}>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
                         rows={rows}
