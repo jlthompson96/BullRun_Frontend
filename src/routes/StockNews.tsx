@@ -16,7 +16,7 @@ const StockNews = () => {
         setLoading(true);
         getStockNews(symbol)
             .then(response => {
-                setNews(response.data); // Extract the data from the Axios response
+                setNews(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -49,7 +49,7 @@ const StockNews = () => {
                         variant="outlined"
                         fullWidth
                         value={symbol}
-                        onChange={(e) => setSymbol(e.target.value.toUpperCase())} // Update the symbol dynamically
+                        onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                     />
                     {news.length > 0 && (
                         <Button variant="outlined" color="secondary" onClick={clearData}>
