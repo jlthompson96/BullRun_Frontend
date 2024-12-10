@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Snackbar, Alert, Typography, AlertColor } from '@mui/material';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
-import { getUserStocks } from "../service/UserServices";
+import { getUserStocks, updateSharesOwned } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
 import axios from 'axios';
+import UpdateSharesModal from '../components/UpdateSharesModal';
 
 const Portfolio = () => {
     const [rows, setRows] = useState<Stock[]>([]);
@@ -11,6 +12,9 @@ const Portfolio = () => {
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [selectedStockId, setSelectedStockId] = useState<string | null>(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' }); // Snackbar state
+
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+    const [selectedStockForUpdate, setSelectedStockForUpdate] = useState<Stock | null>(null);
 
     const cleanCompanyName = (name: string) => {
         return name.replace(/(Common Stock|Class A)/g, '').trim();
@@ -75,6 +79,7 @@ const Portfolio = () => {
         sharesOwned: number;
         currentValue: number;
         logoImage: string;
+        price: number;
     }
     interface StockOption {
         ticker: string;
@@ -86,8 +91,9 @@ const Portfolio = () => {
             symbol: stock.ticker,
             closePrice: 0,
             sharesOwned: parseFloat(shares),
-            currentValue: 0,
             logoImage: '',
+            price: 0,
+            currentValue: 0
         };
 
         setRows((prevRows) => [...prevRows, newStock]);
@@ -118,6 +124,36 @@ const Portfolio = () => {
                 setSnackbar({ open: true, message: 'Failed to delete the stock. Please try again.', severity: 'error' }); // Show error snackbar
             })
             .finally(() => setIsConfirmOpen(false));
+    };
+    const handleOpenUpdateModal = () => {
+        if (selectionModel.length !== 1) {
+            alert('Please select a single stock to update.');
+            return;
+        }
+        const stockToUpdate = rows.find((row) => row.id === selectionModel[0]);
+        if (stockToUpdate) {
+            setSelectedStockForUpdate(stockToUpdate);
+            setIsUpdateModalOpen(true);
+        }
+    };
+
+    const handleUpdateShares = async (updatedStock: Stock) => {
+        await updateSharesOwned(updatedStock.symbol, updatedStock.sharesOwned)
+            .then(() => {
+                setRows((prevRows) =>
+                    prevRows.map((row) =>
+                        row.symbol === updatedStock.symbol
+                            ? { ...row, sharesOwned: updatedStock.sharesOwned, currentValue: updatedStock.sharesOwned * row.closePrice }
+                            : row
+                    )
+                );
+                setSnackbar({ open: true, message: 'Shares updated successfully!', severity: 'success' });
+            })
+            .catch((error) => {
+                console.error('Failed to update shares:', error);
+                setSnackbar({ open: true, message: 'Failed to update shares. Please try again.', severity: 'error' });
+            })
+            .finally(() => setIsUpdateModalOpen(false));
     };
 
     const handleCloseSnackbar = () => {
@@ -159,9 +195,14 @@ const Portfolio = () => {
                         Add Stock
                     </Button>
                     {selectionModel.length === 1 && (
-                        <Button variant="contained" color="error" onClick={handleDeleteStock}>
-                            Delete Stock
-                        </Button>
+                        <>
+                            <Button variant="contained" onClick={handleOpenUpdateModal} sx={{ marginRight: '10px' }}>
+                                Update Shares
+                            </Button>
+                            <Button variant="contained" color="error" onClick={handleDeleteStock}>
+                                Delete Stock
+                            </Button>
+                        </>
                     )}
                     <AddStockModal
                         open={isModalOpen}
@@ -190,7 +231,12 @@ const Portfolio = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
-
+                <UpdateSharesModal
+                    open={isUpdateModalOpen}
+                    stock={selectedStockForUpdate}
+                    handleClose={() => setIsUpdateModalOpen(false)}
+                    handleUpdateShares={handleUpdateShares}
+                />
                 {/* Snackbar */}
                 <Snackbar
                     open={snackbar.open}

@@ -152,7 +152,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     fullWidth
                     sx={{ mb: 2 }}
                 />
-                <TextField
+                {/* <TextField
                     label="Cost Basis ($)"
                     type="number"
                     value={costBasis}
@@ -160,14 +160,14 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     variant="outlined"
                     fullWidth
                     sx={{ mb: 2 }}
-                />
+                /> */}
                 <Button
                     variant="contained"
                     color="primary"
                     sx={{ marginTop: '1em' }}
                     onClick={handleSubmit}
                     fullWidth
-                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading || !costBasis}
+                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading}
                 >
                     {loading ? <CircularProgress size={24} /> : 'Add Stock'}
                 </Button>
