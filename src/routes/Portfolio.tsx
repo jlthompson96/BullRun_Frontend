@@ -5,6 +5,7 @@ import { getUserStocks, updateSharesOwned } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
 import axios from 'axios';
 import UpdateSharesModal from '../components/UpdateSharesModal';
+import { StockData } from '../common/types';
 
 const Portfolio = () => {
     const [rows, setRows] = useState<Stock[]>([]);
@@ -137,7 +138,7 @@ const Portfolio = () => {
         }
     };
 
-    const handleUpdateShares = async (updatedStock: Stock) => {
+    const handleUpdateShares = async (updatedStock: StockData) => {
         await updateSharesOwned(updatedStock.symbol, updatedStock.sharesOwned)
             .then(() => {
                 setRows((prevRows) =>

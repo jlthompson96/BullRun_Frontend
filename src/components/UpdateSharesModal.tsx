@@ -6,7 +6,7 @@ interface UpdateSharesModalProps {
     open: boolean;
     stock: StockData | null;
     handleClose: () => void;
-    handleUpdateShares: (updatedStock: Stock) => void;
+    handleUpdateShares: (updatedStock: StockData) => void;
 }
 
 const UpdateSharesModal: React.FC<UpdateSharesModalProps> = ({ open, stock, handleClose, handleUpdateShares }) => {

@@ -34,23 +34,23 @@ const LearningCenter = () => {
                         <Typography>Topics</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <List>
-                            <ListItem component="a" href="#stock-market-basics">
+                        <List sx={{ padding: '10px' }}>
+                            <ListItem component="a" href="#stock-market-basics" sx={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit' }}>
                                 <ListItemText primary="Stock Market Basics" />
                             </ListItem>
-                            <ListItem component="a" href="#compound-interest">
+                            <ListItem component="a" href="#compound-interest" sx={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit' }}>
                                 <ListItemText primary="Compound Interest" />
                             </ListItem>
-                            <ListItem component="a" href="#pe-ratio">
+                            <ListItem component="a" href="#pe-ratio" sx={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit' }}>
                                 <ListItemText primary="Price to Earnings Ratio (P/E)" />
                             </ListItem>
-                            <ListItem component="a" href="#dividend-yield">
+                            <ListItem component="a" href="#dividend-yield" sx={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit' }}>
                                 <ListItemText primary="Dividend Yield" />
                             </ListItem>
-                            <ListItem component="a" href="#fair-value">
+                            <ListItem component="a" href="#fair-value" sx={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit' }}>
                                 <ListItemText primary="Fair Value Calculation" />
                             </ListItem>
-                            <ListItem component="a" href="#future-value">
+                            <ListItem component="a" href="#future-value" sx={{ padding: '10px', textDecoration: 'none', color: 'inherit' }}>
                                 <ListItemText primary="Future Value Calculation" />
                             </ListItem>
                         </List>
@@ -122,12 +122,12 @@ const LearningCenter = () => {
                 </Typography>
                 <CompoundChartExample />
                 <Typography variant="body1" style={{ padding: '20px' }}>
-                    <a href="#table-of-contents">Back to Table of Contents</a>
+                    <a href="#table-of-contents" style={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit', backgroundColor: 'rgb(237, 242, 247)' }}>Back to Table of Contents</a>
                 </Typography>
             </Paper>
             {/* Create a section about calculating a stocks P/E */}
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" id="pe-ration" gutterBottom>
+                <Typography variant="h5" id="pe-ratio" gutterBottom>
                     Price to Earnings Ratio (P/E)
                 </Typography>
                 <hr style={{ margin: '20px' }} />
@@ -161,7 +161,7 @@ const LearningCenter = () => {
                     <b>The company's P/E ratio is 10.</b>
                 </Typography>
                 <Typography variant="body1" style={{ padding: '20px' }}>
-                    <a href="#table-of-contents">Back to Table of Contents</a>
+                    <a href="#table-of-contents" style={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit', backgroundColor: 'rgb(237, 242, 247)' }}>Back to Table of Contents</a>
                 </Typography>
             </Paper>
             {/* Create a section about calculating a stocks Dividend Yield */}
@@ -200,7 +200,7 @@ const LearningCenter = () => {
                     <b>The company's Dividend Yield is 4%.</b>
                 </Typography>
                 <Typography variant="body1" style={{ padding: '20px' }}>
-                    <a href="#table-of-contents">Back to Table of Contents</a>
+                    <a href="#table-of-contents" style={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit', backgroundColor: 'rgb(237, 242, 247)' }}>Back to Table of Contents</a>
                 </Typography>
             </Paper>
 
@@ -243,7 +243,7 @@ const LearningCenter = () => {
                     <b>The company's Fair Value is $2.50.</b>
                 </Typography>
                 <Typography variant="body1" style={{ padding: '20px' }}>
-                    <a href="#table-of-contents">Back to Table of Contents</a>
+                    <a href="#table-of-contents" style={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit', backgroundColor: 'rgb(237, 242, 247)' }}>Back to Table of Contents</a>
                 </Typography>
             </Paper>
 
@@ -314,7 +314,7 @@ const LearningCenter = () => {
                     )}
                 </div>
                 <Typography variant="body1" style={{ padding: '20px' }}>
-                    <a href="#table-of-contents">Back to Table of Contents</a>
+                    <a href="#table-of-contents" style={{ padding: '10px', borderBottom: '1px solid #ddd', textDecoration: 'none', color: 'inherit', backgroundColor: 'rgb(237, 242, 247)' }}>Back to Table of Contents</a>
                 </Typography>
             </Paper>
 
