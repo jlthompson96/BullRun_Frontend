@@ -40,7 +40,7 @@ const UpdateSharesModal: React.FC<UpdateSharesModalProps> = ({ open, stock, hand
                     fullWidth
                     value={shares}
                     onChange={handleChange}
-                    inputProps={{ min: 1 }}
+                    slotProps={{ htmlInput: { min: 1 } }}
                 />
             </DialogContent>
             <DialogActions>
