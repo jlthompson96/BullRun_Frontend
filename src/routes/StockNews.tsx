@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Container, Paper, Typography, Link, Button, TextField, Stack } from "@mui/material";
+import { Container, Paper, Typography, Link, Button, TextField, Stack, Divider } from "@mui/material";
 import { useState } from "react";
 import { getStockNews } from "../service/StockServices";
 
@@ -16,7 +16,7 @@ const StockNews = () => {
         setLoading(true);
         getStockNews(symbol)
             .then(response => {
-                setNews(response.data); // Extract the data from the Axios response
+                setNews(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -32,14 +32,16 @@ const StockNews = () => {
 
     return (
         <Container maxWidth="lg">
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
+                <Typography variant="h4" align="center" gutterBottom>
+                    Stock News
+                </Typography>
+                <Typography variant="subtitle1" align="center" gutterBottom>
+                    Stay up-to-date with the latest news on your favorite stocks.
+                </Typography>
+            </Paper>
+            <Divider sx={{ marginY: '20px' }} />
             <Paper elevation={3} sx={{ padding: "20px", marginTop: "50px" }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
-                    News
-                </Typography>
-                <hr />
-                <Typography variant="body1">
-                    Welcome to the News section! Here you can read the latest news about the stock market, investing, and more. We have articles, from Yahoo Finance to help you stay up to date with the latest news.
-                </Typography>
                 <Typography variant="h5" gutterBottom style={{ marginTop: "20px" }}>
                     Search for Stock News
                 </Typography>
@@ -49,7 +51,7 @@ const StockNews = () => {
                         variant="outlined"
                         fullWidth
                         value={symbol}
-                        onChange={(e) => setSymbol(e.target.value.toUpperCase())} // Update the symbol dynamically
+                        onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                     />
                     {news.length > 0 && (
                         <Button variant="outlined" color="secondary" onClick={clearData}>

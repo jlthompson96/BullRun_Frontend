@@ -8,7 +8,8 @@ import {
     CircularProgress,
     Alert,
 } from '@mui/material';
-import axios from 'axios';
+import { addUserStock } from '../service/UserServices';
+import { getCompanyProfile } from '../service/StockServices';
 
 const style = {
     position: 'absolute',
@@ -54,7 +55,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
             setError(null);
 
             try {
-                const response = await axios.get(`/stockData/companyProfile?symbol=${tickerInput.toUpperCase()}`);
+                const response = await getCompanyProfile(tickerInput.toUpperCase());
                 const result = response.data.results;
 
                 if (result?.name) {
@@ -81,16 +82,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
         if (selectedStock && sharesOwned) {
             setLoading(true);
             try {
-                // Sending data to the addStock endpoint
-                const response = await axios.post('/stockData/addStock', {
-                    symbol: selectedStock.ticker,
-                    sharesOwned: sharesOwned,
-                    name: selectedStock.name,
-                    costBasis: costBasis,
-                });
-
-                // You can handle the response here, for example, show a success message
-                console.log(response.data);
+                await addUserStock(selectedStock.ticker, selectedStock.name, parseFloat(sharesOwned), parseFloat(costBasis));
 
                 // Close modal and reset states
                 handleAddStock(selectedStock, sharesOwned);
@@ -160,7 +152,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     fullWidth
                     sx={{ mb: 2 }}
                 />
-                <TextField
+                {/* <TextField
                     label="Cost Basis ($)"
                     type="number"
                     value={costBasis}
@@ -168,14 +160,14 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
                     variant="outlined"
                     fullWidth
                     sx={{ mb: 2 }}
-                />
+                /> */}
                 <Button
                     variant="contained"
                     color="primary"
                     sx={{ marginTop: '1em' }}
                     onClick={handleSubmit}
                     fullWidth
-                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading || !costBasis}
+                    disabled={!selectedStock || !sharesOwned || parseFloat(sharesOwned) <= 0 || loading}
                 >
                     {loading ? <CircularProgress size={24} /> : 'Add Stock'}
                 </Button>

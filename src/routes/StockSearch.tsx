@@ -110,10 +110,15 @@ const StockSearch: React.FC = () => {
     return (
         <Container maxWidth="lg">
             <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
-                <Typography variant="h5" gutterBottom>
-                    Stock Analyzer
+                <Typography variant="h4" align="center" gutterBottom>
+                    Stock Search
                 </Typography>
-                <hr />
+                <Typography variant="subtitle1" align="center" gutterBottom>
+                    Enter a stock symbol to get the latest stock price and information about the company.
+                </Typography>
+            </Paper>
+            <Divider sx={{ marginY: '20px' }} />
+            <Paper elevation={3} sx={{ padding: '20px', marginTop: '50px' }} className="stock-search-container">
                 <Typography variant="body1"> Enter a stock symbol to get the latest stock price and information about the company.</Typography>
                 <TextField
                     variant="outlined"

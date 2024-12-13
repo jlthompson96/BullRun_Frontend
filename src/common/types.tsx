@@ -4,6 +4,10 @@ export interface BaseObject extends Object {
 
 export interface StockData extends BaseObject {
     price: number;
+    sharesOwned: number;
+    symbol: string;
+    // Add this line
+
 }
 
 export interface CompanyProfile extends BaseObject {
