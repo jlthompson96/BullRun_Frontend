@@ -14,7 +14,11 @@ export const addUserStock = async (ticker: string, name: string, sharesOwned: nu
 }
 
 export const deleteUserStock = async (stockTicker: string) => {
-    return api.delete(`/stockData/deleteStock?stockTicker=${stockTicker}`);
+    return api.delete(`/stockData/deleteStock`, {
+        data: {
+            stockTicker,
+        }
+    });
 }
 
 export const updateSharesOwned = async (stockTicker: string, sharesOwned: number) => {

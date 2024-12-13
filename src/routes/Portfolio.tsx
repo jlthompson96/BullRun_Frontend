@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Snackbar, Alert, Typography, AlertColor, Divider } from '@mui/material';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
-import { getUserStocks, updateSharesOwned } from "../service/UserServices";
+import { deleteUserStock, getUserStocks, updateSharesOwned } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
-import axios from 'axios';
 import UpdateSharesModal from '../components/UpdateSharesModal';
 import { StockData } from '../common/types';
 
@@ -114,7 +113,7 @@ const Portfolio = () => {
     const confirmDeleteStock = () => {
         if (!selectedStockId) return;
 
-        axios.delete('/stockData/deleteStock', { data: selectedStock?.symbol })
+        deleteUserStock(selectedStock?.symbol ?? '')
             .then(() => {
                 setRows((prevRows) => prevRows.filter((row) => row.id !== selectedStockId));
                 setSelectionModel([]);
