@@ -131,6 +131,7 @@ const StockSearch: React.FC = () => {
                     sx={{ marginTop: '20px', width: '33%' }}
                 />
                 <br />
+                <Typography variant="body2" sx={{ marginTop: '20px' }}> Example: AAPL, TSLA, MSFT, GOOGL, AMZN, etc.</Typography>
                 <Button
                     variant="contained"
                     onClick={handleSearch}

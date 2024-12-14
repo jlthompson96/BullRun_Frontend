@@ -13,8 +13,18 @@ const UpdateSharesModal: React.FC<UpdateSharesModalProps> = ({ open, stock, hand
     const [shares, setShares] = useState<number | ''>(stock?.sharesOwned ?? '');
 
     const handleSave = () => {
-        if (stock && shares !== '') {
+        if (stock && shares !== '' && shares >= 1) {
             handleUpdateShares({ ...stock, sharesOwned: shares });
+            handleClose();
+        }
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseInt(event.target.value, 10);
+        if (!isNaN(value) && value >= 1) {
+            setShares(value);
+        } else {
+            setShares('');
         }
     };
 
@@ -23,20 +33,19 @@ const UpdateSharesModal: React.FC<UpdateSharesModalProps> = ({ open, stock, hand
             <DialogTitle>Update Shares for {stock?.symbol}</DialogTitle>
             <DialogContent>
                 <TextField
-                    label="Number of Shares"
+                    autoFocus
+                    margin="dense"
+                    label="Shares Owned"
                     type="number"
                     fullWidth
                     value={shares}
-                    onChange={(e) => setShares(Number(e.target.value))}
+                    onChange={handleChange}
+                    slotProps={{ htmlInput: { min: 1 } }}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={handleSave} color="primary">
-                    Save
-                </Button>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleSave} disabled={shares === ''}>Save</Button>
             </DialogActions>
         </Dialog>
     );
