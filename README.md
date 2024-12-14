@@ -30,3 +30,10 @@ To get started with the project, follow these steps:
    ```sh
    git clone https://github.com/jlthompson96/BullRun_Frontend.git
    cd BullRun_Frontend
+2. Install the dependencies:
+   ```sh
+   npm install
+3. Start the development server:
+   ```sh
+    npm run dev
+4. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
