@@ -9,7 +9,7 @@ import {
     Alert,
 } from '@mui/material';
 import { addUserStock } from '../service/UserServices';
-import { getCompanyProfile } from '../service/StockServices';
+import { checkIfStockIsAlreadyAdded, getCompanyProfile } from '../service/StockServices';
 
 const style = {
     position: 'absolute',
@@ -82,6 +82,13 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
         if (selectedStock && sharesOwned) {
             setLoading(true);
             try {
+                const response = await checkIfStockIsAlreadyAdded(selectedStock.ticker);
+                if (response.data === true) {
+                    setError(`${selectedStock.ticker} already exists in your portfolio`);
+                    setLoading(false);
+                    return;
+                }
+
                 await addUserStock(selectedStock.ticker, selectedStock.name, parseFloat(sharesOwned), parseFloat(costBasis));
 
                 // Close modal and reset states
