@@ -84,7 +84,7 @@ const AddStockModal = ({ open, handleClose, handleAddStock }: AddStockModalProps
             try {
                 const response = await checkIfStockIsAlreadyAdded(selectedStock.ticker);
                 if (response.data === true) {
-                    setError('Stock already exists in your portfolio');
+                    setError(`${selectedStock.ticker} already exists in your portfolio`);
                     setLoading(false);
                     return;
                 }
