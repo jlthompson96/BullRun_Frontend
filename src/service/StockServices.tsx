@@ -24,3 +24,7 @@ export const getIndicesData = async () => {
 export const getStockNews = async (symbol: any) => {
     return api.get('/stockData/stockNews?symbol=' + symbol)
 }
+
+export const checkIfStockIsAlreadyAdded = async (symbol: any) => {
+    return api.get('/stockData/stockExistsInDB?symbol=' + symbol)
+}
