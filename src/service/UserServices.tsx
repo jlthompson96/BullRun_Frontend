@@ -27,3 +27,7 @@ export const updateSharesOwned = async (stockTicker: string, sharesOwned: number
         sharesOwned: sharesOwned,
     });
 }
+
+export const pullPortolioValueOverTime = async () => {
+    return api.get('/users/getPortfolioValueOverTime');
+}

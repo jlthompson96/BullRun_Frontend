@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Snackbar, Alert, Typography, AlertColor, Divider } from '@mui/material';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
-import { deleteUserStock, getUserStocks, updateSharesOwned } from "../service/UserServices";
+import { deleteUserStock, getUserStocks, pullPortolioValueOverTime, updateSharesOwned } from "../service/UserServices";
 import AddStockModal from '../components/AddStockModal';
 import UpdateSharesModal from '../components/UpdateSharesModal';
 import { StockData } from '../common/types';
+import PortfolioChart from '../components/PortfolioChart';
 
 const Portfolio = () => {
     const [rows, setRows] = useState<Stock[]>([]);
@@ -195,6 +196,7 @@ const Portfolio = () => {
                 <Typography variant="h6" sx={{ marginTop: '20px' }}>
                     Total Current Value: ${calculateTotalCurrentValue().toLocaleString()}
                 </Typography>
+                <Button variant='contained' onClick={() => pullPortolioValueOverTime()}>Pull pullPortolioValueOverTime</Button>
                 <div>
                     <br />
                     <Button variant="contained" onClick={() => setIsModalOpen(true)} sx={{ marginRight: '10px' }}>
@@ -210,6 +212,7 @@ const Portfolio = () => {
                             </Button>
                         </>
                     )}
+                    <PortfolioChart />
                     <AddStockModal
                         open={isModalOpen}
                         handleClose={() => {

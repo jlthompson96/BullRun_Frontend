@@ -3,8 +3,10 @@ import axios from 'axios';
 const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Basic ${btoa('user:password')}`,
     },
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:8080',
+    withCredentials: true
 });
 
 api.interceptors.request.use(

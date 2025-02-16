@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/stockData':'https://thompsonserver.net',
-      '/users':'https://thompsonserver.net',
+      '/stockData':'localhost:8080',
+      '/users':'localhost:8080',
     }
   }
 });
