@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 160" width="1000" height="160" role="img" aria-label="BullRun features: Dashboard, Portfolio, Stock Search, Learning Center and News">
+  <style>
+    .bar { animation: glow 2.6s ease-in-out infinite; }
+    @keyframes glow { 0%,100% { opacity: 1 } 50% { opacity: .45 } }
+    .card { animation: lift 6s ease-in-out infinite; }
+    @keyframes lift { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
+    @media (prefers-reduced-motion: reduce) { .bar, .card { animation: none } }
+  </style>
+  <defs>
+    <radialGradient id="n0" cx="0.9" cy="0.1" r="0.8"><stop offset="0" stop-color="#66bb6a" stop-opacity="0.25"/><stop offset="1" stop-color="#66bb6a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="n1" cx="0.9" cy="0.1" r="0.8"><stop offset="0" stop-color="#42a5f5" stop-opacity="0.25"/><stop offset="1" stop-color="#42a5f5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="n2" cx="0.9" cy="0.1" r="0.8"><stop offset="0" stop-color="#26a69a" stop-opacity="0.25"/><stop offset="1" stop-color="#26a69a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="n3" cx="0.9" cy="0.1" r="0.8"><stop offset="0" stop-color="#9ccc65" stop-opacity="0.25"/><stop offset="1" stop-color="#9ccc65" stop-opacity="0"/></radialGradient>
+    <radialGradient id="n4" cx="0.9" cy="0.1" r="0.8"><stop offset="0" stop-color="#64b5f6" stop-opacity="0.25"/><stop offset="1" stop-color="#64b5f6" stop-opacity="0"/></radialGradient>
+  </defs>
+  <g class="card" style="animation-delay:-0.00s">
+    <rect x="10.0" y="10" width="184.8" height="140" rx="10" fill="#0b1f1a" stroke="#66bb6a" stroke-opacity="0.55"/>
+    <rect x="10.0" y="10" width="184.8" height="140" rx="10" fill="url(#n0)"/>
+    <g transform="translate(28.0,26)"><rect x="0" y="0" width="16" height="16" rx="3" fill="none" stroke="#66bb6a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="22" y="0" width="16" height="10" rx="3" fill="none" stroke="#66bb6a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="0" y="22" width="16" height="10" rx="3" fill="none" stroke="#66bb6a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="22" y="16" width="16" height="16" rx="3" fill="none" stroke="#66bb6a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <text x="28.0" y="88" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="0.6" fill="#66bb6a">DASHBOARD</text>
+    <text x="28.0" y="110" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">Your starting point</text>
+    <text x="28.0" y="128" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">for the whole app</text>
+    <rect class="bar" x="26.0" y="140" width="152.8" height="3" rx="1.5" fill="#66bb6a" style="animation-delay:-0.0s"/>
+  </g>
+  <g class="card" style="animation-delay:-0.45s">
+    <rect x="208.8" y="10" width="184.8" height="140" rx="10" fill="#0b1f1a" stroke="#42a5f5" stroke-opacity="0.55"/>
+    <rect x="208.8" y="10" width="184.8" height="140" rx="10" fill="url(#n1)"/>
+    <g transform="translate(226.8,26)"><circle cx="18" cy="18" r="16" fill="none" stroke="#42a5f5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 2v16h16" fill="none" stroke="#42a5f5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 18 L7 30" fill="none" stroke="#42a5f5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <text x="226.8" y="88" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="0.6" fill="#42a5f5">PORTFOLIO</text>
+    <text x="226.8" y="110" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">Add, edit and remove</text>
+    <text x="226.8" y="128" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">holdings with totals</text>
+    <rect class="bar" x="224.8" y="140" width="152.8" height="3" rx="1.5" fill="#42a5f5" style="animation-delay:-0.4s"/>
+  </g>
+  <g class="card" style="animation-delay:-0.90s">
+    <rect x="407.6" y="10" width="184.8" height="140" rx="10" fill="#0b1f1a" stroke="#26a69a" stroke-opacity="0.55"/>
+    <rect x="407.6" y="10" width="184.8" height="140" rx="10" fill="url(#n2)"/>
+    <g transform="translate(425.6,26)"><circle cx="15" cy="15" r="11" fill="none" stroke="#26a69a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 23l11 11" fill="none" stroke="#26a69a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 18l4-4 3 3 5-6" fill="none" stroke="#26a69a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <text x="425.6" y="88" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="0.6" fill="#26a69a">STOCK SEARCH</text>
+    <text x="425.6" y="110" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">Price, daily change</text>
+    <text x="425.6" y="128" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">and company profile</text>
+    <rect class="bar" x="423.6" y="140" width="152.8" height="3" rx="1.5" fill="#26a69a" style="animation-delay:-0.8s"/>
+  </g>
+  <g class="card" style="animation-delay:-1.35s">
+    <rect x="606.4" y="10" width="184.8" height="140" rx="10" fill="#0b1f1a" stroke="#9ccc65" stroke-opacity="0.55"/>
+    <rect x="606.4" y="10" width="184.8" height="140" rx="10" fill="url(#n3)"/>
+    <g transform="translate(624.4,26)"><path d="M0 12 L19 3 L38 12 L19 21 Z" fill="none" stroke="#9ccc65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v9c6 5 16 5 22 0v-9" fill="none" stroke="#9ccc65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 13v10" fill="none" stroke="#9ccc65" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <text x="624.4" y="88" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="0.6" fill="#9ccc65">LEARNING CENTER</text>
+    <text x="624.4" y="110" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">P/E, dividend yield,</text>
+    <text x="624.4" y="128" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">compound interest</text>
+    <rect class="bar" x="622.4" y="140" width="152.8" height="3" rx="1.5" fill="#9ccc65" style="animation-delay:-1.2s"/>
+  </g>
+  <g class="card" style="animation-delay:-1.80s">
+    <rect x="805.2" y="10" width="184.8" height="140" rx="10" fill="#0b1f1a" stroke="#64b5f6" stroke-opacity="0.55"/>
+    <rect x="805.2" y="10" width="184.8" height="140" rx="10" fill="url(#n4)"/>
+    <g transform="translate(823.2,26)"><rect x="0" y="2" width="30" height="30" rx="3" fill="none" stroke="#64b5f6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 10h6v18a4 4 0 0 1-4 4h-2" fill="none" stroke="#64b5f6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10h18M6 17h18M6 24h11" fill="none" stroke="#64b5f6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <text x="823.2" y="88" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="0.6" fill="#64b5f6">NEWS</text>
+    <text x="823.2" y="110" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">Latest headlines</text>
+    <text x="823.2" y="128" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" fill="#a7bfb4">for any ticker</text>
+    <rect class="bar" x="821.2" y="140" width="152.8" height="3" rx="1.5" fill="#64b5f6" style="animation-delay:-1.6s"/>
+  </g>
+</svg>
